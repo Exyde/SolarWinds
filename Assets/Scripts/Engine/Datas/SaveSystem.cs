@@ -21,7 +21,7 @@ public static class SaveSystem
         
         int randomTag = UnityEngine.Random.Range(0, 999);
 
-        File.WriteAllBytes(dirPath + objectName.RemoveIllegalCharactersFromRubensDesignerMagicTool("").Replace(" ", "") + "_"  + ".png", bytes);
+        File.WriteAllBytes(dirPath + objectName.RemoveIllegalCharacters("").Replace(" ", "") + "_"  + ".png", bytes);
 
 #if UNITY_EDITOR
 //@BUILDCHECK

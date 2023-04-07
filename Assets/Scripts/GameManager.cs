@@ -8,7 +8,5 @@ public class GameManager : MonoBehaviour
     private void Awake() {
         if (_eraseSavedPicturesOnAwake) SaveSystem.EraseSavedPictures();
         Logger.SetLoggerMode(_loggerDebugMode);
-
-        //AsyncOperation asyncLoadOperation =  SceneManager.LoadSceneAsync("SCN_Enviro"), LoadSceneMode.Additive);
     }
 }

@@ -1,12 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-public static class Utils
-{
-
-}
-
 
 //String extensions methods to help display string in a particuliar style easily.
 public static class StringExtension {
@@ -15,8 +7,29 @@ public static class StringExtension {
     public static string Italic(this string str) => "<i>" + str + "</i>";
     public static string Size(this string str, int size) => string.Format("<size={0}>{1}</size>",size,str);
 
-    public static string RemoveIllegalCharactersFromRubensDesignerMagicTool(this string str, string sep = ""){
+    public static string RemoveIllegalCharacters(this string str, string sep = ""){
         return string.Join(sep, str.Split(System.IO.Path.GetInvalidFileNameChars()));
     }
-    
+}
+
+public static class TransformExtensions{
+    public static void Clear(this Transform transform){
+        int i;
+        for (i = transform.childCount - 1; i >= 0; i--){
+
+        if (Application.IsPlaying(transform.GetChild(i)))
+            GameObject.Destroy((transform.GetChild(i).gameObject));
+        else
+            GameObject.DestroyImmediate((transform.GetChild(i).gameObject));
+        }
+    }
+}
+
+public static class Vector3Extensions{
+    public static Vector3 Random(this Vector3 vector){
+        vector.x = UnityEngine.Random.Range(0f, 1f);
+        vector.y = UnityEngine.Random.Range(0f, 1f);
+        vector.z = UnityEngine.Random.Range(0f, 1f);
+        return vector;
+    }
 }
