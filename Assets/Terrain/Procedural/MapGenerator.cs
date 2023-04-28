@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using System.Threading;
+
 
 public class MapGenerator : MonoBehaviour
 {
@@ -45,7 +48,7 @@ public class MapGenerator : MonoBehaviour
         _falloffMap = FalloffGenerator.GenerateFalloffMap(MAP_CHUNK_SIZE);
     }
 
-    public void GenerateTerrain(){
+    MapData GenerateMapData(){
         float [,] noiseMap = Noise.GenerateNoiseMap(MAP_CHUNK_SIZE, MAP_CHUNK_SIZE, _seed,  _mapScale, _octaves, _persistence, _lacunarity, _offset); 
 
         Color[] colorMap = new Color[MAP_CHUNK_SIZE * MAP_CHUNK_SIZE];
@@ -70,19 +73,21 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
-        RequestDisplayMap(noiseMap, colorMap);
 
+        return new MapData(noiseMap, colorMap);
     }
 
-    private void RequestDisplayMap(float[,] heightMap, Color[] colorMap){
+    public void DisplayMapInEditor(){
+        MapData mapData = GenerateMapData();
+
         _mapDisplay = GetComponent<MapDisplay>();
 
         if (_drawMode == DrawMode.NoiseMap){
-            _mapDisplay.DrawTexture(TextureGenerator.GenerateTextureFromHeightMap(heightMap));
+            _mapDisplay.DrawTexture(TextureGenerator.GenerateTextureFromHeightMap(mapData._heightMap));
         } else if (_drawMode == DrawMode.ColorMap){
-            _mapDisplay.DrawTexture(TextureGenerator.GenerateTextureFromColorMap(colorMap, MAP_CHUNK_SIZE, MAP_CHUNK_SIZE));
+            _mapDisplay.DrawTexture(TextureGenerator.GenerateTextureFromColorMap(mapData._colorMap, MAP_CHUNK_SIZE, MAP_CHUNK_SIZE));
         } else if (_drawMode == DrawMode.Mesh){
-            _mapDisplay.DrawMesh(MeshGenerator.GenerateTerrainMesh(heightMap, _heightMultiplier, _meshHeightCurve, _levelOfDetail), TextureGenerator.GenerateTextureFromColorMap(colorMap, MAP_CHUNK_SIZE, MAP_CHUNK_SIZE));
+            _mapDisplay.DrawMesh(MeshGenerator.GenerateTerrainMesh(mapData._heightMap, _heightMultiplier, _meshHeightCurve, _levelOfDetail), TextureGenerator.GenerateTextureFromColorMap(mapData._colorMap, MAP_CHUNK_SIZE, MAP_CHUNK_SIZE));
         } else if (_drawMode == DrawMode.FalloffMap){
             float[,] map = FalloffGenerator.GenerateFalloffMap(MAP_CHUNK_SIZE);
             _mapDisplay.DrawTexture(TextureGenerator.GenerateTextureFromHeightMap(map));
@@ -109,4 +114,14 @@ public struct TerrainType{
     public string _name;
     [Range(0, 1)] public  float _heightTreshold;
     public Color _color;
+}
+
+public struct MapData{
+    public float[,] _heightMap;
+    public Color[] _colorMap;
+
+    public MapData(float[,] heightMap, Color[] colorMap){
+        _heightMap = heightMap;
+        _colorMap = colorMap;
+    }
 }

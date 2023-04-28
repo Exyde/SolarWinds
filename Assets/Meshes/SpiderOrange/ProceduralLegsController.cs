@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ProceduralLegsController : MonoBehaviour
 {
-    [SerializeField] int _solverSmoothing = 1;
     [Header("Transforms")]
     [SerializeField] Transform[] _IKFootTargets;
     [SerializeField] Transform[] _bodyAttachedPoints;
@@ -15,7 +14,6 @@ public class ProceduralLegsController : MonoBehaviour
     [SerializeField][Range(0.2f, 25f)] float _groundCheckDst = .5f;
 
     [Header("Steps Settings")]
-    [SerializeField][Range(.1f, .3f)] float _moveStepThreshold = .1f;
     [SerializeField][Range(0.2f, 2f)] float _stepSize = .5f;
     [SerializeField][Range(1f, 200f)] float _stepSpeed = 40f;
     [SerializeField][Range(.1f, 3f)] float _stepHeightMultiplier = 1f;
@@ -63,7 +61,7 @@ public class ProceduralLegsController : MonoBehaviour
         for (int i = 0; i < _footCount; i++){
                 float distance = Vector3.Distance(_bodyAttachedPoints[i].position, _stepGroundTargetPoints[i]);
 
-                if (distance > _stepSize && !_isMovingFoot[i] && _stepGroundTargetPoints[i] != _bodyAttachedPoints[i].position){
+                if (distance > _stepSize &&_stepGroundTargetPoints[i] != _bodyAttachedPoints[i].position){
                     _stepGroundTargetPoints[i] = _bodyAttachedPoints[i].position;
             }
         }
@@ -72,47 +70,14 @@ public class ProceduralLegsController : MonoBehaviour
         for (int i = 0; i < _footCount; i++){
             float distance = Vector3.Distance(_IKFootTargets[i].position, _stepGroundTargetPoints[i]);
 
-            if (distance < _moveStepThreshold)
-                continue;
+            Vector3 startPos = _IKFootTargets[i].position;
+            Vector3 targetPos = _stepGroundTargetPoints[i];
 
-            if (!_isMovingFoot[i])
-                StartCoroutine(PerformStep(i));
+            float t = Mathf.InverseLerp(0, _stepSize, distance);
+
+            _IKFootTargets[i].position = Vector3.MoveTowards(startPos, targetPos, Time.deltaTime * _stepSpeed);
+            //_IKFootTargets[i].position += Vector3.up * _stepCurve.Evaluate(t) * _stepHeightMultiplier;
         }
-    }
-
-    IEnumerator PerformStep(int i){
-
-        _isMovingFoot[i] = true;
-        Vector3 startPos = _IKFootTargets[i].position;
-        Vector3 targetPos = _stepGroundTargetPoints[i];
-#if false
-
-        while (Vector3.Distance(_IKFootTargets[i].position, targetPos) >= _moveStepThreshold / 2f){
-            Debug.Log("Distance : " + Vector3.Distance(_IKFootTargets[i].position, targetPos));
-            _IKFootTargets[i].position = Vector3.Lerp(startPos, targetPos, Time.deltaTime * _stepSpeed);
-            //_IKFootTargets[i].position += Vector3.up * _stepCurve.Evaluate(Vector3.Distance(_IKFootTargets[i].position, _stepGroundTargetPoints[i]) / _stepSize) * _stepHeightMultiplier;
-            yield return new WaitForFixedUpdate();
-
-        }
-#endif
-    
-        for (int step = 0; step < _solverSmoothing; step++){
-            //Old Working back, use it in update foot position if needed
-            //_IKFootTargets[i].position = Vector3.Lerp(startPos, targetPos, Time.deltaTime * _stepSpeed);
-            //_IKFootTargets[i].position += Vector3.up * _stepCurve.Evaluate(Vector3.Distance(_IKFootTargets[i].position, _stepGroundTargetPoints[i]) / _stepSize) * _stepHeightMultiplier;
-            
-            float t= Mathf.InverseLerp(0, _solverSmoothing, step);
-            float targetPosY = _stepCurve.Evaluate(t);
-
-            _IKFootTargets[i].position = Vector3.Lerp(startPos, targetPos, step / (float)(_solverSmoothing + 1f));
-            if (_tryUseParabolicMovement)
-                _IKFootTargets[i].position = new Vector3(_IKFootTargets[i].position.x, targetPosY, _IKFootTargets[i].position.z) * _stepHeightMultiplier;
-            
-            yield return new WaitForFixedUpdate();
-        }
-        Debug.Log("Here");
-        _IKFootTargets[i].position = targetPos;
-        _isMovingFoot[i] = false;
     }
 
     void SnapBodyTargetToGround(){
@@ -154,12 +119,24 @@ public class ProceduralLegsController : MonoBehaviour
 
     private void OnDrawGizmos() {
         for (int i = 0; i < _footCount; i++){
+
+            Gizmos.color = Color.green;
+            
+            Gizmos.DrawCube(_bodyAttachedPoints[i].position + _verticalGroundOffset, Vector3.one * .1f);
+
             Gizmos.color = _footDisplayColor;
             Gizmos.DrawWireCube(_IKFootTargets[i].position, Vector3.one * .1f);
-            Gizmos.DrawLine(_stepGroundTargetPoints[i], (_stepGroundTargetPoints[i] + _verticalGroundOffset) + (Vector3.down * _groundCheckDst));
+            Gizmos.DrawLine(_bodyAttachedPoints[i].position + _verticalGroundOffset, (_bodyAttachedPoints[i].position + _verticalGroundOffset) + (Vector3.down * _groundCheckDst));
 
             //Gizmos.color = Color.cyan;
             //Gizmos.DrawLine(_bodyAttachedPoints[i].position, _stepGroundTargetPoints[i]);
+
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawLine(_IKFootTargets[i].position, _bodyAttachedPoints[i].position);
+            Gizmos.color = Color.green;
+            Vector3 dir = (_bodyAttachedPoints[i].position - _IKFootTargets[i].position).normalized;
+            Gizmos.DrawLine(_IKFootTargets[i].position, dir * _stepSize + _IKFootTargets[i].position);
+
         }
     }
 }

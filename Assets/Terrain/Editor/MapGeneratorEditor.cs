@@ -12,12 +12,12 @@ public class MapGeneratorEditor : Editor
         MapGenerator mapGenerator = (MapGenerator)target;
         if (DrawDefaultInspector()){
             if (mapGenerator._autoUpdate){
-                mapGenerator.GenerateTerrain();
+                mapGenerator.DisplayMapInEditor();
             }
         }
 
         if (GUILayout.Button("Generate Map and Texture")){
-            mapGenerator.GenerateTerrain();
+            mapGenerator.DisplayMapInEditor();
         }
     }
 }
