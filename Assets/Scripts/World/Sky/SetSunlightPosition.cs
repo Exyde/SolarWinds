@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class SetSunlightPosition : MonoBehaviour, ITickable
 {
+    [SerializeField] bool _update;
+    [SerializeField] Transform _target;
+    [SerializeField] bool _lookAtTarget;
     void Start()
     {
-        WorldClock._instance.RegisterTickable(this);
+        //WorldClock._instance.RegisterTickable(this);
         Shader.SetGlobalVector("_SunDirection", transform.forward);
     }
 
     void Update()
     {
-        //Shader.SetGlobalVector("_SunDirection", transform.forward);
+        if (!_update) return;
+        Shader.SetGlobalVector("_SunDirection", transform.forward);
+
+        if (_lookAtTarget) transform.LookAt(_target);
     }
 
     public void Tick(){

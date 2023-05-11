@@ -18,5 +18,17 @@ public class TerrainGeneratorEditor : Editor
         if (GUILayout.Button("Generate Terrain Data")){
             _terrainGenerator.GenerateTerrainData();
         }
+
+        GUILayout.BeginHorizontal();
+
+        if (GUILayout.Button("Generate Forest")){
+            _terrainGenerator.GenerateForest();
+        }
+
+        if (GUILayout.Button("Clear Forest")){
+            _terrainGenerator.ClearForest();
+        }
+
+        GUILayout.EndHorizontal();
     }
 }

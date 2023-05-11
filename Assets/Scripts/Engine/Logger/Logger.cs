@@ -1,4 +1,3 @@
-#if UNITY_EDITOR
 using UnityEngine;
 using Core.GameEvents;
 
@@ -53,5 +52,4 @@ public static class Logger{
         Debug.Log(_loggerMode);
     }
 }
-#endif
 
