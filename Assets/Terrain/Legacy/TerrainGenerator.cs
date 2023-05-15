@@ -33,6 +33,17 @@ public class TerrainGenerator : MonoBehaviour
     [SerializeField] Transform _treeHolder;
     [SerializeField] bool _resetForests;
 
+    [Header ("Fireflies")]
+    [SerializeField] GameObject _fireflyPrefab;
+    [SerializeField] int _fireflyCount;
+    [SerializeField] Transform _fireflyHolder;
+    [SerializeField] AnimationCurve _fireflyHeightDistributionCurve;
+    
+    private void Start(){
+        GenerateForest();
+        GenerateFireflies();
+    }
+
     public void GenerateTerrainData(){
         _terrainData = new TerrainData();
         _terrainData.heightmapResolution = 513;
@@ -76,16 +87,43 @@ public class TerrainGenerator : MonoBehaviour
         _forestRoutine = StartCoroutine(CGenerateForest());
     }
 
-    IEnumerator CGenerateForest(){
+    public void GenerateFireflies(){
+        SpawnFireflies();
+    }
+    public void SpawnCreatures(GameObject creaturePrefab, int creatureCount, Transform creatureHolder, AnimationCurve heightCurve = null){
+        for (int i = 0; i < creatureCount; i++){
+            Vector3 randomPosition = GetRandomTerrainPosition();
+            randomPosition += heightCurve == null ? Vector3.up * _fireflyHeightDistributionCurve.Evaluate(Random.value) * _terrainData.size.y : Vector3.zero;
+            Vector3 randomRotation = new Vector3(0, Random.Range(0, 360), 0);
+            GameObject creature = Instantiate(creaturePrefab, randomPosition, Quaternion.Euler(randomRotation));
+            creature.transform.parent = creatureHolder;
+        }
+    }
 
-        if (_resetForests) ClearForest();
+    void ClearCreatures(Transform creatureHolder){
+        creatureHolder.Clear();
+    }
+    public void SpawnFireflies(){
+        ClearCreatures(_fireflyHolder);
+        SpawnCreatures(_fireflyPrefab, _fireflyCount, _fireflyHolder, _fireflyHeightDistributionCurve);
+    }
+    public Vector3 GetRandomTerrainPosition(){
         float halfTerrainX = _terrainData.size.x / 2;
         float halfTerrainZ = _terrainData.size.z / 2;
         float verticalRaycastStart = _terrainData.size.y + 100f;
 
+        Vector3 randomPosition = new Vector3(Random.Range(- halfTerrainX, halfTerrainX), verticalRaycastStart, Random.Range(- halfTerrainZ, halfTerrainZ));
+        return randomPosition;
+    }
+
+    IEnumerator CGenerateForest(){
+
+        if (_resetForests) ClearForest();
+
+
 
         for (int i = 0; i < _treeCount; i++){
-            Vector3 randomPosition = new Vector3(Random.Range(- halfTerrainX, halfTerrainX), verticalRaycastStart, Random.Range(- halfTerrainZ, halfTerrainZ));
+            Vector3 randomPosition = GetRandomTerrainPosition();
             Vector3 randomRotation = new Vector3(0, Random.Range(0, 360), 0);
 
             //Debug.DrawLine(randomPosition, randomPosition + Vector3.down * verticalRaycastStart * 100f, Color.red, 3f);
@@ -102,7 +140,7 @@ public class TerrainGenerator : MonoBehaviour
                     randomPosition = hit.point;
                     GameObject tree = Instantiate(_treePrefab, randomPosition, Quaternion.Euler(randomRotation));
 
-                    tree.transform.localScale = Vector3.one * Random.Range(0.8f, 1.2f);
+                    tree.transform.localScale = Vector3.one * Random.Range(0.5f, 2f);
                     tree.name = $"Tree {i}";
                     tree.transform.parent = _treeHolder;
                 }

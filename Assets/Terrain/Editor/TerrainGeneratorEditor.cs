@@ -11,7 +11,7 @@ public class TerrainGeneratorEditor : Editor
         TerrainGenerator _terrainGenerator = (TerrainGenerator)target;
         if (DrawDefaultInspector()){
             if (_terrainGenerator._autoUpdate){
-                _terrainGenerator.GenerateTerrainData();
+                //_terrainGenerator.GenerateTerrainData();
             }
         }
 
@@ -27,6 +27,14 @@ public class TerrainGeneratorEditor : Editor
 
         if (GUILayout.Button("Clear Forest")){
             _terrainGenerator.ClearForest();
+        }
+
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+
+        if (GUILayout.Button("Generate Fireflies")){
+            _terrainGenerator.GenerateFireflies();
         }
 
         GUILayout.EndHorizontal();

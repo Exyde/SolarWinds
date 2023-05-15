@@ -94,7 +94,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: b38718865fce43047bdcb8e3acfe9fe2, type: 3}
       propertyPath: m_Materials.Array.data[2]
       value: 
-      objectReference: {fileID: 2100000, guid: a253d14b5df701244be84e96459bb9e1, type: 2}
+      objectReference: {fileID: 2100000, guid: da006dbd52b30064f82b5367f63a617c, type: 2}
     - target: {fileID: 919132149155446097, guid: b38718865fce43047bdcb8e3acfe9fe2, type: 3}
       propertyPath: m_Name
       value: geometry_nodes_trees_2
