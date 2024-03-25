@@ -28,7 +28,7 @@ public class Timer
         }
     }
 
-    //Should be Properties
+    //Should be Properties - Also the timer from test porject is better I think ? idk   
     public void SetTimerDuration(float _durationInSeconds) => _timerDuration = _durationInSeconds;
     public void ResetTimerValue() => _timeElapsed = 0;
     public float GetTimerDuration() => _timerDuration;

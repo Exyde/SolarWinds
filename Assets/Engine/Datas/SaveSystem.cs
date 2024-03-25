@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.IO;
 using UnityEditor;
-using System;
 
 public static class SaveSystem
 {
@@ -26,8 +25,9 @@ public static class SaveSystem
     {
         var datas = Directory.GetFiles(Constants.DIR_PICTURES_SAVE_PATH);
 
-        for (int i = 0; i < datas.Length; i++){
-            File.Delete(datas[i]);
+        foreach (var t in datas)
+        {
+            File.Delete(t);
         }
 
         Directory.Delete(Constants.DIR_PICTURES_SAVE_PATH);
