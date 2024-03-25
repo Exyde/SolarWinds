@@ -28,6 +28,7 @@ public class Timer
         }
     }
 
+    //Should be Properties
     public void SetTimerDuration(float _durationInSeconds) => _timerDuration = _durationInSeconds;
     public void ResetTimerValue() => _timeElapsed = 0;
     public float GetTimerDuration() => _timerDuration;

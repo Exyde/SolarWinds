@@ -1,5 +1,6 @@
 using UnityEngine;
 using Core.GameEvents;
+using EventType = Core.GameEvents.EventType;
 
 public static class Logger{
 
@@ -11,10 +12,10 @@ public static class Logger{
         Info = 8,
         Events = 16
     }
-    public static LoggerMode _loggerMode = 0;
+    private static LoggerMode _loggerMode = 0;
     public static void SetLoggerMode(LoggerMode mode) => _loggerMode = mode; 
 
-    //Colors
+    //Colors - Add Settingd
     private static readonly string _infoColor = "cyan";
     private static readonly string _eventColor = "purple";
 
@@ -37,13 +38,13 @@ public static class Logger{
 
     public static void LogInfo(object message){
         if (_loggerMode.HasFlag(LoggerMode.Info))
-        Debug.Log(message.ToString().Color(_infoColor));
+            Debug.Log(message.ToString().Color(_infoColor));
     }
 
-    public static void LogEvent(EventName eventName, string eventSender, string managerName){
+    public static void LogEvent(EventType eventType, string eventSender, string managerName){
         if (_loggerMode.HasFlag(LoggerMode.Events)){
 
-            string message = $"[{managerName}] : Handling {eventName} sent by {eventSender}...";
+            string message = $"[{managerName}] : Handling {eventType} sent by {eventSender}...";
             Debug.Log(message.ToString().Color(_eventColor));
         }
     }

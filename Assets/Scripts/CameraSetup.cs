@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CameraSetup : MonoBehaviour
 {
-
-
+    //Todo : Enum with Camera Mode
+    
     [SerializeField] Camera _playerCamera;
     [SerializeField] Camera _lowResCamera;
     [SerializeField] RenderTexture _lowResRenderTexture;
@@ -16,5 +16,4 @@ public class CameraSetup : MonoBehaviour
             _playerCamera.targetTexture = _lowResRenderTexture;
         }
     }
-
 }

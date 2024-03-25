@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Core.GameEvents;
+using EventType = Core.GameEvents.EventType;
 
 public class MeteoManager : MonoBehaviour, IGameEventManager {
     public SkyboxLerper _skyboxLerper;
-    private void OnGameEvent_MeteoManager(EventName eventName, string senderName){
+    private void OnGameEvent_MeteoManager(EventType eventType, string senderName){
 
-        Logger.LogEvent(eventName, senderName, this.GetType().Name);
+        Logger.LogEvent(eventType, senderName, this.GetType().Name);
 
-        HandleCollisionEvents(eventName, senderName);
-        HandleRaycastEvents(eventName, senderName);
-        HandleTriggerEvents(eventName, senderName);
-        HandleSpecialCases(eventName, senderName);
+        HandleCollisionEvents(eventType, senderName);
+        HandleRaycastEvents(eventType, senderName);
+        HandleTriggerEvents(eventType, senderName);
+        HandleSpecialCases(eventType, senderName);
     }
 
 
@@ -32,26 +33,26 @@ public class MeteoManager : MonoBehaviour, IGameEventManager {
         //Logger.LogInfo("Set rain");
     }
 
-    public void HandleTriggerEvents(EventName eventName, string senderName)
+    public void HandleTriggerEvents(EventType eventType, string senderName)
     {        
-        if (eventName == EventName.TRIGGER_ENTER){
+        if (eventType == EventType.TRIGGER_ENTER){
             RequestRain();
         }
-        else if (eventName ==  EventName.TRIGGER_EXIT){
+        else if (eventType ==  EventType.TRIGGER_EXIT){
             Logger.LogInfo("Setting Sun !");
         }
     }
 
-    public void HandleCollisionEvents(EventName eventName, string senderName)
+    public void HandleCollisionEvents(EventType eventType, string senderName)
     {
 
     }
 
-    public void HandleRaycastEvents(EventName eventName, string senderName)
+    public void HandleRaycastEvents(EventType eventType, string senderName)
     {
     }
 
-    public void HandleSpecialCases(EventName eventName, string senderName){
+    public void HandleSpecialCases(EventType eventType, string senderName){
         if (senderName == "Cube_OnTriggerExit"){
             Logger.LogInfo("Get ready for the storm");
         }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using Core.GameEvents;
 using System.Collections.Generic;
+using EventType = Core.GameEvents.EventType;
 
 public class EffectManager : MonoBehaviour, IGameEventManager
 {
@@ -18,22 +19,22 @@ public class EffectManager : MonoBehaviour, IGameEventManager
 
 
     #region Interfaces Handlers
-    public void HandleTriggerEvents(EventName eventName, string senderName)
+    public void HandleTriggerEvents(EventType eventType, string senderName)
     {
         throw new System.NotImplementedException();
     }
 
-    public void HandleCollisionEvents(EventName eventName, string senderName)
+    public void HandleCollisionEvents(EventType eventType, string senderName)
     {
         throw new System.NotImplementedException();
     }
 
-    public void HandleRaycastEvents(EventName eventName, string senderName)
+    public void HandleRaycastEvents(EventType eventType, string senderName)
     {
         throw new System.NotImplementedException();
     }
 
-    public void HandleSpecialCases(EventName eventName, string senderName)
+    public void HandleSpecialCases(EventType eventType, string senderName)
     {
         throw new System.NotImplementedException();
     }

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class RotateEntity : MonoBehaviour
 {
-
     [SerializeField] float _speed = 1.0f;
     [SerializeField] float _speedThresholdOnRandom;
     [SerializeField] Vector3 _direction;
@@ -17,5 +16,5 @@ public class RotateEntity : MonoBehaviour
     }
     void Update() => transform.Rotate(_direction * _speed * Time.deltaTime);
 
-    float GetRandomSign() => Mathf.Sign(Random.Range(-1f, 1f));
+    float GetRandomSign() => Mathf.Sign(Random.Range(-1f, 1f)); 
 }

@@ -7,7 +7,7 @@ namespace Core.GameEvents{
 
         protected override void SetEventType()
         {
-            _eventName = EventName.TRIGGER_ENTER; 
+            eventType = EventType.TRIGGER_ENTER; 
         }
         
         private void OnTriggerEnter(Collider other){

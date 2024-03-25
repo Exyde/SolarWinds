@@ -2,15 +2,17 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace Core.GameEvents{
     public abstract class GameEvent : MonoBehaviour {
         
         //Core Game Action - Static, and registered by ALL the managers ?
-        public static Action<EventName, string> _onGameEvent;
+        public static Action<EventType, string> _onGameEvent;
 
+        [FormerlySerializedAs("_eventName")]
         [Header("Event Parameters - Rien a rentrer ici ._. - juste debug !")]
-        [SerializeField] protected EventName _eventName;
+        [SerializeField] protected EventType eventType;
         [SerializeField] protected string _eventSender;
 
         [Header("Scriptable Events for Designers <3")]
@@ -27,12 +29,12 @@ namespace Core.GameEvents{
         }
 
         internal virtual void DispatchEvent(){
-            Logger.LogInfo("Event Dispatched : " + _eventName + " | Event Sender : " + _eventSender);
-            _onGameEvent?.Invoke(_eventName, _eventSender);
+            Logger.LogInfo("Event Dispatched : " + eventType + " | Event Sender : " + _eventSender);
+            _onGameEvent?.Invoke(eventType, _eventSender);
 
             foreach(ScriptableEvents e in _scriptableEvents){
                 if (IsEventValid(e.GetFactsConditions())){
-                    Logger.LogInfo("All Facts are valids => Triggering Event : " + _eventName);
+                    Logger.LogInfo("All Facts are valids => Triggering Event : " + eventType);
 
                     e.GetEvent()?.Invoke();
                     

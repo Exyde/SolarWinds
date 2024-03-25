@@ -14,7 +14,5 @@ public class Entity : MonoBehaviour, ITickable
         
     }
 
-    public void Tick(){
-        
-    }
+    public virtual void Tick() {}
 }

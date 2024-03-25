@@ -5,7 +5,7 @@ namespace Core.GameEvents{
 
         protected override void SetEventType()
         {
-            _eventName = EventName.TRIGGER_EXIT; 
+            eventType = EventType.TRIGGER_EXIT; 
         }
         private void OnTriggerExit(Collider other){
             if (_triggerDetectionMode == TriggerDetectionMode.Layer && other.gameObject.layer == _triggerLayer){

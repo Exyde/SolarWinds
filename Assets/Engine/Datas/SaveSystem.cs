@@ -5,10 +5,6 @@ using System;
 
 public static class SaveSystem
 {
-    public static bool _isEnabled = true;
-
-    public static bool IsEnabled() => _isEnabled;
-
     public static void SaveTexToPng(Texture2D tex, string objectName){
 
         byte[] bytes = tex.EncodeToPNG();
@@ -19,12 +15,9 @@ public static class SaveSystem
             Directory.CreateDirectory(dirPath);
         }
         
-        int randomTag = UnityEngine.Random.Range(0, 999);
-
         File.WriteAllBytes(dirPath + objectName.RemoveIllegalCharacters("").Replace(" ", "") + "_"  + ".png", bytes);
 
 #if UNITY_EDITOR
-//@BUILDCHECK
             AssetDatabase.Refresh();
 #endif
     }

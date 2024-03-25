@@ -1,7 +1,6 @@
 using UnityEditor;
 using UnityEngine;
 
-
 [CustomEditor(typeof(WorldBuilder))]
 public class WorldBuilderEditor : Editor
 {

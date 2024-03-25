@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Core.GameEvents{
-
+namespace Core.GameEvents 
+{
     [System.Serializable]
-    public enum EventName{
+    public enum EventType
+    {
         TRIGGER_ENTER, TRIGGER_STAY, TRIGGER_EXIT,
         COLLISION_ENTER, COLLISION_STAY,COLLISION_EXIT,
         RAYCAST_LOOK, RAYCAST_INTERACT, RAYCAST_PICTURE,
@@ -13,7 +14,8 @@ namespace Core.GameEvents{
     };
 
     [System.Serializable]
-    public class FactCondition{
+    public class FactCondition
+    {
         [SerializeField] public string _blackboardName = "Blackboard Name";
         [SerializeField] public string _factName = "Fact Name";
         [SerializeField] public Comparaison _comparaison;
@@ -21,15 +23,15 @@ namespace Core.GameEvents{
     }
 
     [System.Serializable]
-    public class FactOperation{
+    public class FactOperation
+    {
         [SerializeField] public string _blackboardName;
         [SerializeField] public string _factName;
         [SerializeField] public Operation _operation;
         [SerializeField] public int _value;
     }
-
     
-    public enum Operation {SetTo, Add, Substract };
+    public enum Operation { SetTo, Add, Substract };
     public enum Comparaison { Equal, Different, Superior, SuperiorOrEqual, Inferior, InferiorOrEqual };
 
     [System.Serializable]

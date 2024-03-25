@@ -8,7 +8,7 @@ namespace Core.GameEvents{
 
         protected override void SetEventType()
         {
-            _eventName = EventName.TRIGGER_STAY; 
+            eventType = EventType.TRIGGER_STAY; 
         }
         private void OnTriggerStay(Collider other){
 

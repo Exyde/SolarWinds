@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireflyTest : MonoBehaviour
+public class FireflyTest : Entity
 {
-
     public GameObject _target; //Player
     public float _speed = 5f;
     public float timeBetweenTargetUpdate = 1f;
@@ -30,4 +29,8 @@ public class FireflyTest : MonoBehaviour
         transform.LookAt(targetPos);
     }
 
+    public override void Tick()
+    {
+        base.Tick();
+    }
 }
