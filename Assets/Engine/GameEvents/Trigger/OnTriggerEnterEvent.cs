@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Core.GameEvents{
-    public class OnTriggerEnterEvent : OnTriggerGameEvent{
+    public class OnTriggerEnterEvent : OnTriggerGameEvent 
+    {
 
         protected override void SetEventType()
         {

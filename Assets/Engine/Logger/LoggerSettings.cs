@@ -6,9 +6,7 @@ namespace ExydeToolbox
     public class LoggerSettings : ScriptableObject
     {
         [SerializeField] public Logger.LoggerMode Mode;
-        //Colors - Add Settingd
-        public readonly string InfoColor = "cyan";
-        public readonly string EventColor = "purple";
-        
+        public string InfoColor = "cyan";
+        public string EventColor = "purple";
     } 
 }

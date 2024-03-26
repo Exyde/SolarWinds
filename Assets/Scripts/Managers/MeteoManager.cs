@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Core.GameEvents;
 using EventType = Core.GameEvents.EventType;
@@ -8,30 +7,23 @@ public class MeteoManager : MonoBehaviour, IGameEventManager {
     public SkyboxLerper _skyboxLerper;
     private void OnGameEvent_MeteoManager(EventType eventType, string senderName){
 
-        Logger.LogEvent(eventType, senderName, this.GetType().Name);
+        Engine.Core.Instance.Logger.LogEvent(eventType, senderName, this.GetType().Name);
 
         HandleCollisionEvents(eventType, senderName);
         HandleRaycastEvents(eventType, senderName);
         HandleTriggerEvents(eventType, senderName);
         HandleSpecialCases(eventType, senderName);
     }
-
-
+    
     private void Start() {
         // LerpSkyboxAllNight(); //@TODO : Lerp Skybox during all night duration, start day event, etc
     }
 
-    private void OnEnable() {
+    private void OnEnable() { }
 
-    }
+    private void OnDisable() { }
 
-    private void OnDisable() {
-
-    }
-
-    public void RequestRain(){
-        //Logger.LogInfo("Set rain");
-    }
+    private void RequestRain(){ }
 
     public void HandleTriggerEvents(EventType eventType, string senderName)
     {        
@@ -39,22 +31,17 @@ public class MeteoManager : MonoBehaviour, IGameEventManager {
             RequestRain();
         }
         else if (eventType ==  EventType.TRIGGER_EXIT){
-            Logger.LogInfo("Setting Sun !");
+            Engine.Core.Instance.Logger.LogInfo("Setting Sun !");
         }
     }
 
-    public void HandleCollisionEvents(EventType eventType, string senderName)
-    {
+    public void HandleCollisionEvents(EventType eventType, string senderName) { }
 
-    }
-
-    public void HandleRaycastEvents(EventType eventType, string senderName)
-    {
-    }
+    public void HandleRaycastEvents(EventType eventType, string senderName) { }
 
     public void HandleSpecialCases(EventType eventType, string senderName){
         if (senderName == "Cube_OnTriggerExit"){
-            Logger.LogInfo("Get ready for the storm");
+            Engine.Core.Instance.Logger.LogInfo("Get ready for the storm");
         }
     }
 
@@ -124,6 +111,7 @@ public class SkyboxLerper{
 }
 
 [System.Serializable]
+// ofc this should be a scriptable : todo
 public class SkyboxSettings{
     [Header ("Sky")]
     [SerializeField] public Color _skyColor;

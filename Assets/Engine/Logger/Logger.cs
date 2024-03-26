@@ -1,14 +1,16 @@
 using UnityEngine;
-using Core.GameEvents;
 using EventType = Core.GameEvents.EventType;
 
 namespace ExydeToolbox
 {
+    [System.Serializable]
      public class Logger
      {
-         private LoggerSettings _settings;
-         private static LoggerMode _loggerMode = 0;
-         private static void SetLoggerMode(LoggerMode mode) => _loggerMode = mode; 
+         public static Logger Instance = null;
+         
+         [SerializeField] private LoggerSettings _settings;
+         [SerializeField] private LoggerMode _loggerMode = 0;
+         private void SetLoggerMode(LoggerMode mode) => _loggerMode = mode; 
          
          [System.Flags]
          public enum LoggerMode { 
@@ -21,6 +23,7 @@ namespace ExydeToolbox
      
          public Logger(LoggerSettings settings)
          {
+             Instance = this;
              _settings = settings;
              SetLoggerMode(settings.Mode);
          }

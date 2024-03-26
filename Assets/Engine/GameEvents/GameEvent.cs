@@ -16,7 +16,7 @@ namespace Core.GameEvents{
         [SerializeField] protected string _eventSender;
 
         [Header("Scriptable Events for Designers <3")]
-        [SerializeField] List<ScriptableEvents> _scriptableEvents;
+        [SerializeField] List<ScriptableEvent> _scriptableEvents;
 
         private void Awake() {
             //_eventName = this.GetType().Name;
@@ -24,19 +24,17 @@ namespace Core.GameEvents{
             _eventSender = this.gameObject.name;
         }
 
-        protected virtual void SetEventType(){
-
-        }
+        protected virtual void SetEventType(){ }
 
         internal virtual void DispatchEvent(){
-            Logger.LogInfo("Event Dispatched : " + eventType + " | Event Sender : " + _eventSender);
+            Engine.Core.Instance.Logger.LogInfo("Event Dispatched : " + eventType + " | Event Sender : " + _eventSender);
             _onGameEvent?.Invoke(eventType, _eventSender);
 
-            foreach(ScriptableEvents e in _scriptableEvents){
+            foreach(ScriptableEvent e in _scriptableEvents){
                 if (IsEventValid(e.GetFactsConditions())){
-                    Logger.LogInfo("All Facts are valids => Triggering Event : " + eventType);
+                    Engine.Core.Instance.Logger.LogInfo("All Facts are valids => Triggering Event : " + eventType);
 
-                    e.GetEvent()?.Invoke();
+                    e.Event?.Invoke();
                     
                     foreach (FactOperation operation in e.GetFactsOperations()){
                         //Todo : Set Fact Value
@@ -48,25 +46,27 @@ namespace Core.GameEvents{
         bool IsEventValid(List<FactCondition> _facts){
             foreach(FactCondition factCondition in _facts){
                 bool test = true; //Todo : Check facts value !
-                if (test == false){
-                    Logger.LogInfo("Failed at fact XXX - To Implement Better");
+                if (test == false)
+                {
+                    Engine.Core.Instance.Logger.LogInfo("Failed at fact XXX - To Implement Better");
                     return false;
                 } else{
-                    Logger.LogInfo(factCondition._factName + " @ " + factCondition._value + " is valid !");
+                    Engine.Core.Instance.Logger.LogInfo(factCondition._factName + " @ " + factCondition._value + " is valid !");
                 }
             }
             return true;
         }
     }
 
-    [System.Serializable]
-    public struct ScriptableEvents{
+    [Serializable]
+    public struct ScriptableEvent
+    {
         [SerializeField] string _eventName;
         [SerializeField] UnityEvent _event;
         [SerializeField] List<FactOperation> _factOperations;
         [SerializeField] List<FactCondition> _factConditions;
 
-        public UnityEvent GetEvent() => _event;
+        public UnityEvent Event => _event;
         public List<FactCondition> GetFactsConditions() => _factConditions;
         public List<FactOperation> GetFactsOperations() => _factOperations;
     }
