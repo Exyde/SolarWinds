@@ -24,6 +24,8 @@ namespace Engine
         void InitializeCoreSystems()
         {
             _logger = new Logger(_loggerSettings);
+            
+            _logger.LogInfo("Core Initialized !".Bold());
 
             DOTween.Init();
         }

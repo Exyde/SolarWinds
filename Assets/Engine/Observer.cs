@@ -37,7 +37,7 @@ namespace Engine
         public void Invoke()
         {
             //todo : Logger
-            Debug.Log($"Invoking {OnValueChanged.GetPersistentEventCount()} listeners for type {nameof(T)} ");
+            //Debug.Log($"Invoking {OnValueChanged.GetPersistentEventCount()} listeners for type {nameof(T)} ");
             OnValueChanged.Invoke(_value);
         }
 

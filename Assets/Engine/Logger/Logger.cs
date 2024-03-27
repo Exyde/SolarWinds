@@ -48,7 +48,7 @@ namespace ExydeToolbox
          public  void LogEvent(EventType eventType, string eventSender, string managerName){
              if (_loggerMode.HasFlag(LoggerMode.Events)){
                  var message = $"[{managerName}] : Handling {eventType} sent by {eventSender}...";
-                 Debug.Log(message.ToString().Color(_settings.EventColor));
+                 Debug.Log(message.Color(_settings.EventColor));
              }
          }
          public void DebugLoggerState(){
