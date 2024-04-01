@@ -7,4 +7,29 @@ public static class Vector3Extensions{
         vector.z = UnityEngine.Random.Range(0f, 1f);
         return vector;
     }
+    
+    public static Vector3 RandomPosInCircle (this Vector3 vec, float radius)
+    {
+        var y = vec.y;
+        var halfRadius = radius / 2f;
+        return vec + new Vector3(
+            Random.Range(-halfRadius, halfRadius),
+            y,
+            Random.Range(-halfRadius, halfRadius)
+        );
+    }
+
+    public static Vector3 RandomPosInSphere(this Vector3 vec, Vector3 size)
+    {
+        return vec + new Vector3(
+            Random.Range(-size.x /2, size.x),
+            Random.Range(-size.y /2, size.y),
+            Random.Range(-size.z /2, size.z)
+        );
+    }
+
+    public static Vector3 RandomPosInSphere(this Vector3 vec, float size)
+    {
+        return RandomPosInSphere(vec, new Vector3(size, size, size));
+    }
 }
