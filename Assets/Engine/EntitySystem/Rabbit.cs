@@ -7,7 +7,7 @@ namespace Entity
         public override void Die()
         {
             base.Die();
-            Logger.Instance.LogMessage("Custom death for Rabbit");
+            Engine.Core.Instance.Logger.Log("Custom death for Rabbit");
         }
     }
 }

@@ -1,11 +1,10 @@
 using System;
-using Extensions;
 using UnityEngine;
 using Vibrant;
-using Vibrant.Core;
-using Logger = Vibrant.Core.Logger;
 using Random = UnityEngine.Random;
+using Core = Engine.Core;
 
+using Timer  = Vibrant.Core.Timer;
 namespace Entity
 {
     public class Entity : MonoBehaviour, IEntity
@@ -16,20 +15,20 @@ namespace Entity
         [SerializeField] private float _currentLifetime;
         
         //Timer
-        [SerializeField] private Timer _timer;
+        [SerializeField] private Vibrant.Core.Timer _timer;
         
         private void Log()
         {
-            Logger.Instance.LogMessage($"[Entity] : {_entityData.Name} with  [{_currentLifetime} / {_entityData.SpawnLifetime}]");
+            Engine.Core.Instance.Logger.Log($"[Entity] : {_entityData.Name} with  [{_currentLifetime} / {_entityData.SpawnLifetime}]");
         }
         
         #region IEntity
         public virtual void Birth()
         {
-            Logger.Instance.LogMessage($"[Entity] : {_entityData.Name} is born !");   
+            Engine.Core.Instance.Logger.Log($"[Entity] : {_entityData.Name} is born !");   
             gameObject.name = _entityData.Name + $" : {Time.time}";
 
-            _timer = new Timer();
+            _timer = new Vibrant.Core.Timer();
             _timer.RegisterEndEvent(Tick);
         }
 
@@ -58,7 +57,7 @@ namespace Entity
 
         public virtual void Die()
         {
-            Logger.Instance.LogMessage(($"[Entity] : {_entityData.Name} is dead !"));
+            Engine.Core.Instance.Logger.Log(($"[Entity] : {_entityData.Name} is dead !"));
 
             _timer.Kill();
 

@@ -8,7 +8,7 @@ namespace Entity
         public override void Birth()
         {
             base.Birth();
-            Logger.Instance.LogMessage("Custom Birth for Wolf");
+            Engine.Core.Instance.Logger.Log("Custom Birth for Wolf");
         }
     }
 }
