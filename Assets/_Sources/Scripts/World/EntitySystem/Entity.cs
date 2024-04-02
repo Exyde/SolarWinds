@@ -1,12 +1,17 @@
 using System;
 using UnityEngine;
-using Vibrant;
 using Random = UnityEngine.Random;
 using Core = Engine.Core;
 
-using Timer  = Vibrant.Core.Timer;
-namespace Entity
+namespace Systems.Entities
 {
+    public interface IEntity
+    {
+        public void Birth();
+        public void Tick();
+        public void Die();
+
+    }
     public class Entity : MonoBehaviour, IEntity
     {
         [SerializeField] private EntityData _entityData;

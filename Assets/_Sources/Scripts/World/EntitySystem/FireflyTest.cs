@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
+using Systems.Entities;
 public class FireflyTest : Entity
 {
     public GameObject _target; //Player

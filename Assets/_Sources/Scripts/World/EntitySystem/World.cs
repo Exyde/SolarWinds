@@ -6,7 +6,7 @@ using Vibrant.Core;
 
 using Random = UnityEngine.Random;
 
-namespace Entity
+namespace Systems.Entities
 {
     public class World : SingletonManager<World, IEntity>, ISerializationCallbackReceiver
     {

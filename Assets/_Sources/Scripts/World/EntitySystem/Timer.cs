@@ -1,6 +1,7 @@
 using System;
-using Entity;
 using UnityEngine;
+using Systems.Entities;
+
 
 namespace Vibrant.Core
 {

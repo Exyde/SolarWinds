@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Random =  UnityEngine.Random;
 
-namespace Entity
+namespace Systems.Entities
 {
     [CreateAssetMenu(menuName = "Vibrant/Entity", fileName = "ED_New Entity")]
     public class EntityData : ScriptableObject
