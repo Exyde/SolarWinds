@@ -27,10 +27,9 @@ namespace Systems.Entities
         
         private void Update()
         {
-           
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                SpawnRandomEntity();
+               // SpawnRandomEntity();
             }
         }
         #endregion

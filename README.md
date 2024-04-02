@@ -51,38 +51,6 @@ J'aime beaucoup le flow scriptable settings (datas), class C# pure avec injectio
 
 ___ 
 
-# Entity System
-
-Sort of GOAP thing but not really ? Humm sounds kinda like
-
-## Behaviors Components - The basic bricks
-
-That's core.
-[The morphologies of creatures and the neural systems for
-controlling their muscle forces are both generated automatically
-using genetic algorithms](https://www.karlsims.com/papers/siggraph94.pdf)
-
-- Gather / Collect
-- Eat
-- Drink
-- Walk
-- Fly
-- Swim
-- Die
-- Birth
-- Follow / Hunt
-- Flee / Avoid
-- Craft ? Custom behaviors ? See Rain World aswell
-- Less is more I guess, the things will come out of the systems
-## External Senssors
-- InSun / In Shadow
-- Day/Night (Static)
-- InRain
-- Detect Water
-- Detect Weather
-- Detect Food Source
-- Detect Entities = ScanSystem around on timings
-- Detect Soulmate
 
 
 # Git Study
@@ -107,3 +75,6 @@ git config --global init.defaultBranch main 			//Change the default branch name 
 git config user.name				// read a specific key
 git help config 					//open doc offline
 git config -h 						//terminal help
+
+## Framework Questions
+- Logger as dll ? How ?

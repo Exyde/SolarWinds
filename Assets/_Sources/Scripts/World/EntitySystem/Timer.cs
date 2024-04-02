@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using Systems.Entities;
 
-
 namespace Vibrant.Core
 {
     [Serializable]
