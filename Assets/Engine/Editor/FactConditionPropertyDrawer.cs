@@ -5,12 +5,13 @@ using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 
 [CustomPropertyDrawer(typeof(FactCondition))]
-public class FactConditionPropertyDrawer : PropertyDrawer{
-
+public class FactConditionPropertyDrawer : PropertyDrawer
+{
     SerializedProperty _blackboardName;
     SerializedProperty _factName;
     SerializedProperty _comparaison;
     SerializedProperty _value;
+    
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label){
 
         //Getting back all fields

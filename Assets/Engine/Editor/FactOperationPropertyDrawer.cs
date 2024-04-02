@@ -5,7 +5,8 @@ using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 
 [CustomPropertyDrawer(typeof(FactOperation))]
-public class FactOperationPropertyDrawer : PropertyDrawer{
+public class FactOperationPropertyDrawer : PropertyDrawer
+{
 
     SerializedProperty _blackboardName;
     SerializedProperty _factName;

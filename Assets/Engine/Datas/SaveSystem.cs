@@ -8,8 +8,7 @@ public static class SaveSystem
 
         byte[] bytes = tex.EncodeToPNG();
 
-        var dirPath = Constants.DIR_PICTURES_SAVE_PATH; //using constant name hard coded so that designer don't break it up
-
+        const string dirPath = Constants.PICTURES_SAVES_PATH;
         if (!Directory.Exists(dirPath)){
             Directory.CreateDirectory(dirPath);
         }
@@ -23,15 +22,16 @@ public static class SaveSystem
 
     internal static void EraseSavedPictures()
     {
-        var datas = Directory.GetFiles(Constants.DIR_PICTURES_SAVE_PATH);
+        const string path = Constants.PICTURES_SAVES_PATH;
+        var files = Directory.GetFiles(path);
 
-        foreach (var t in datas)
+        foreach (var file in files)
         {
-            File.Delete(t);
+            File.Delete(file);
         }
 
-        Directory.Delete(Constants.DIR_PICTURES_SAVE_PATH);
-        Directory.CreateDirectory(Constants.DIR_PICTURES_SAVE_PATH);
+        Directory.Delete(path);
+        Directory.CreateDirectory(path);
 #if UNITY_EDITOR
         AssetDatabase.Refresh();
 #endif
@@ -40,7 +40,7 @@ public static class SaveSystem
     internal static void EraseSaveDatas(){
         Directory.Delete(Constants.DIR_SAVE_PATH);
         Directory.CreateDirectory(Constants.DIR_SAVE_PATH);
-        Directory.CreateDirectory(Constants.DIR_PICTURES_SAVE_PATH);
+        Directory.CreateDirectory(Constants.PICTURES_SAVES_PATH);
     }
 
 }
