@@ -18,15 +18,15 @@
 J'aime beaucoup le flow scriptable settings (datas), class C# pure avec injection de settings, ObservableThing et Controller derrière en fin de courses
 
 - Todo: 
-	- Implement the framework : todo
-	- Impletement the kindof actions system from lucas for entity : talk
+	- Implement the framework : parts by parts, just rework it ?
+	- Reimport and repush all asetts : ok
 	- Add DoTween : ok
-	- Add Scriptable Settings for data management and easy system
-	- Git ammend day/night thing for sun stsate events
 	- Merge with the other project on desktop from train : ok 
-	- Reimport and repush all asetts 
+	- Git ammend day/night thing for sun stsate events
+	- Add Scriptable Settings for data management and easy system
 	- Observable : wip
 	- Get a better structure like in MC or Aria maybe
+	- Impletement the kindof actions system from lucas for entity : talk
 
 ## Code Structure Notes - Engine
 
