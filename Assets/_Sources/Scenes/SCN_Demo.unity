@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.0111554675, g: 0.1121892, b: 0.12543853, a: 1}
+  m_IndirectSpecularColor: {r: 0.26139536, g: 0.5004009, b: 0.46882796, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1807,30 +1807,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skyboxLerper:
     _timeToLerp: 0
-    _skyboxSettingsA:
-      _skyColor: {r: 0, g: 0, b: 0, a: 0}
-      _horizonColor: {r: 0, g: 0, b: 0, a: 0}
-      _starsDensity: 0
-      _cloudTexture: {fileID: 0}
-      _cloudColor: {r: 0, g: 0, b: 0, a: 0}
-      _cloudSpeed: 0
-      _cloudHeight: 0
-      _cloudEdge: 0
-      _sunColor: {r: 0, g: 0, b: 0, a: 0}
-      _sunSize: 0
-      _sunMaskSize: 0
-    _skyboxSettingsB:
-      _skyColor: {r: 0, g: 0, b: 0, a: 0}
-      _horizonColor: {r: 0, g: 0, b: 0, a: 0}
-      _starsDensity: 0
-      _cloudTexture: {fileID: 0}
-      _cloudColor: {r: 0, g: 0, b: 0, a: 0}
-      _cloudSpeed: 0
-      _cloudHeight: 0
-      _cloudEdge: 0
-      _sunColor: {r: 0, g: 0, b: 0, a: 0}
-      _sunSize: 0
-      _sunMaskSize: 0
+    _skyboxSettingsA: {fileID: 0}
+    _skyboxSettingsB: {fileID: 0}
 --- !u!1 &396872445
 GameObject:
   m_ObjectHideFlags: 0
@@ -2061,7 +2039,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6c4e93980ca2614a8769568561025d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _eventName: 0
+  eventType: 0
   _eventSender: 
   _scriptableEvents:
   - _eventName: 
@@ -3275,6 +3253,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _update: 0
+  _target: {fileID: 0}
+  _lookAtTarget: 0
 --- !u!1 &778066961
 GameObject:
   m_ObjectHideFlags: 0
@@ -7966,7 +7946,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2063234759}
   - component: {fileID: 2063234758}
-  - component: {fileID: 2063234757}
   - component: {fileID: 2063234760}
   m_Layer: 0
   m_Name: GameManager
@@ -7975,19 +7954,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2063234757
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2063234756}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 936d72cdd443aa6418752bfbf4381d54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _loggerMode: -1
 --- !u!114 &2063234758
 MonoBehaviour:
   m_ObjectHideFlags: 0

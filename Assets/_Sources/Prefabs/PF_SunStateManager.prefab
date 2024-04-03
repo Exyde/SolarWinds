@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 545903537196003328}
   - component: {fileID: 545903537196003343}
+  - component: {fileID: 7821285229864127138}
   m_Layer: 0
   m_Name: PF_SunStateManager
   m_TagString: Untagged
@@ -24,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 545903537196003342}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -44,4 +45,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97356a9cca36eb84a91f5475dd088b7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sequenceMode: 3
+  _sequenceMode: 0
+--- !u!114 &7821285229864127138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545903537196003342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50e15e72a2fc4944fab11eef4b4a432b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skyboxLerper:
+    _timeToLerp: 0
+    _skyboxSettingsA: {fileID: 0}
+    _skyboxSettingsB: {fileID: 0}

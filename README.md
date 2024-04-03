@@ -18,7 +18,7 @@
 J'aime beaucoup le flow scriptable settings (datas), class C# pure avec injection de settings, ObservableThing et Controller derrière en fin de courses
 
 - Todo: 
-	- Implement the framework : parts by parts, just rework it ?
+	- Implement the framework : parts by parts, just rework it ? Done
 	- Reimport and repush all asetts : ok
 	- Add DoTween : ok
 	- Merge with the other project on desktop from train : ok 

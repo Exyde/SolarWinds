@@ -26,9 +26,4 @@ public class FireflyTest : Entity
         targetPos = _target.transform.position;
         transform.LookAt(targetPos);
     }
-
-    public override void Tick()
-    {
-        base.Tick();
-    }
 }
