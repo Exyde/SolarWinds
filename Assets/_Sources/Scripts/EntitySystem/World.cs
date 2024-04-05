@@ -24,7 +24,7 @@ namespace Systems.Entities
         [SerializeField] Transform _fireflyHolder;
         [SerializeField] AnimationCurve _fireflyHeightDistributionCurve;
 
-        [SerializeField] private TerrainGenerator _terrain;
+        [SerializeField] private TerrainSurface _terrain;
         
         [SerializeField] private List<EntityData> _entityDatas;
 
@@ -81,7 +81,7 @@ namespace Systems.Entities
  
         private void SpawnCreatures(EntityData entity, int creatureCount, Transform creatureHolder, AnimationCurve heightCurve = null){
             for (int i = 0; i < creatureCount; i++){
-                Vector3 randomPosition = _terrain.GetRandomTerrainPosition();
+                Vector3 randomPosition = _terrain.GetRandomTerrainPositionAtHeight();
                 randomPosition += heightCurve == null ? Vector3.up * _fireflyHeightDistributionCurve.Evaluate(Random.value) * _terrain.Data.size.y : Vector3.zero;
                 //Vector3 randomRotation = new Vector3(0, Random.Range(0, 360), 0);
                 SpawnEntity(entity, randomPosition, creatureHolder);
@@ -95,7 +95,7 @@ namespace Systems.Entities
             ClearForest();
             
             for (int i = 0; i < _treeCount; i++){
-                Vector3 randomPosition = _terrain.GetRandomTerrainPosition();
+                Vector3 randomPosition = _terrain.GetRandomTerrainPositionAtHeight();
                 Vector3 randomRotation = new Vector3(0, Random.Range(0, 360), 0);
 
                 //Debug.DrawLine(randomPosition, randomPosition + Vector3.down * verticalRaycastStart * 100f, Color.red, 3f);

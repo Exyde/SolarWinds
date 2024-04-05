@@ -1,20 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class TerrainGenerator : MonoBehaviour
+public class TerrainSurface : MonoBehaviour
 {
+    #region Global Members
+    [Header("Settings")]
+    [SerializeField] Vector3 _terrainSize;
     [SerializeField] LayerMask _groundLayer;
-    [SerializeField] TerrainData _terrainData;
     [SerializeField][Tooltip("Number of perlin sampling")][Range(1, 8)] int _octaves; 
     [SerializeField][Tooltip("Modulate the amplitude, a.k.a the distance between each sampling")][Range(0, 1)] float _persistence;
     [SerializeField][Tooltip("Grow frequency between each octaves")][Range(1, 32)] float _lacunarity;
     [SerializeField][Range(0.0001f, 128f)] float _mapScale;
-    [SerializeField] Vector3 _terrainSize;
-
-    [SerializeField] float _heightMultiplier;
-    [SerializeField] AnimationCurve _heightCurve;
-
+    [SerializeField, HideInInspector] TerrainData _terrainData;
+    
     [Header("Randomness")]
     [SerializeField] int _seed;
     [SerializeField] Vector2 _offset;
@@ -24,21 +21,15 @@ public class TerrainGenerator : MonoBehaviour
     [SerializeField] public bool _useFalloffMap;
 
     [SerializeField] Material _terrainMaterial;
-    Terrain _terrain;
+    private Terrain _terrain;
+    
+    #endregion
 
-    [Header("Forests")]
-    [SerializeField] List<GameObject> _treePrefabs;
-    [SerializeField][Range(1, 1000)] int _treeCount;
-    [SerializeField] Transform _treeHolder;
-    [SerializeField] bool _resetForests;
-
-    [Header ("Fireflies")]
-    [SerializeField] GameObject _fireflyPrefab;
-    [SerializeField] int _fireflyCount;
-    [SerializeField] Transform _fireflyHolder;
-    [SerializeField] AnimationCurve _fireflyHeightDistributionCurve;
-
+    #region Properties
     public TerrainData Data => _terrainData;
+    public float HalfX => _terrainData.size.x / 2;
+    public float HalfZ => _terrainData.size.z / 2;
+    #endregion
 
     public void GenerateTerrainData(){
         _terrainData = new TerrainData();
@@ -55,9 +46,7 @@ public class TerrainGenerator : MonoBehaviour
         _terrain.Flush();
 
         transform.position = new Vector3(-_terrainSize.x/2, 0, -_terrainSize.z/2);
-
-        //if (_autoUpdateForest) GenerateForest();
-
+        
     }
 
     float[,] GenerateHeights(){
@@ -77,17 +66,15 @@ public class TerrainGenerator : MonoBehaviour
 
         return map;
     }
+    
+    public Vector3 GetRandomTerrainPositionAtHeight(){
 
+        var x = HalfX;
+        var y = _terrainData.size.y + 100f;
+        var z = HalfZ;
 
-
-    public Vector3 GetRandomTerrainPosition(){
-        float halfTerrainX = _terrainData.size.x / 2;
-        float halfTerrainZ = _terrainData.size.z / 2;
-        float verticalRaycastStart = _terrainData.size.y + 100f;
-
-        Vector3 randomPosition = new Vector3(Random.Range(- halfTerrainX, halfTerrainX), verticalRaycastStart, Random.Range(- halfTerrainZ, halfTerrainZ));
+        Vector3 randomPosition = new Vector3(Random.Range(- x, x ), y, Random.Range(- z, z ));
         return randomPosition;
     }
-
-
+    
 }
