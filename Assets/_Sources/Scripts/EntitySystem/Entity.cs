@@ -5,33 +5,23 @@ using Core = Engine.Core;
 
 namespace Systems.Entities
 {
-    public interface IEntity
-    {
-        public void Birth();
-        public void Tick();
-        public void Die();
-
-    }
     public class Entity : MonoBehaviour, IEntity
     {
+        [Header("Entity Component")]
         [SerializeField] private EntityData _entityData;
-        
-        [Header("Debug")]
         [SerializeField] private float _currentLifetime;
-        
-        //Timer
         [SerializeField] private Vibrant.Core.Timer _timer;
         
-        private void Log()
+        private void LogInnerState()
         {
-            Engine.Core.Instance.Logger.Log($"[Entity] : {_entityData.Name} with  [{_currentLifetime} / {_entityData.SpawnLifetime}]");
+            //Engine.Core.Instance.Logger.Log($"[Entity] : {_entityData.Name} with  [{_currentLifetime} / {_entityData.SpawnLifetime}]");
         }
         
         #region IEntity
         public virtual void Birth()
         {
-            Engine.Core.Instance.Logger.Log($"[Entity] : {_entityData.Name} is born !");   
-            gameObject.name = _entityData.Name + $" : {Time.time}";
+            Engine.Core.Instance.Logger.Log($"[Entity] : {_entityData.Name} is born !");
+            gameObject.name = _entityData.Name;
 
             _timer = new Vibrant.Core.Timer();
             _timer.RegisterEndEvent(Tick);
@@ -41,7 +31,7 @@ namespace Systems.Entities
         {
             _currentLifetime -= _entityData.LossOnTick;
             _currentLifetime = Math.Clamp(_currentLifetime, 0, _entityData.SpawnLifetime);
-            Log();
+            LogInnerState();
 
             if (_currentLifetime <= 0)
             {
@@ -74,6 +64,7 @@ namespace Systems.Entities
                 meshRenderer.material = _entityData.DeathMaterial;
             }
             
+            //Disable all behavior and set dead state
            // Destroy(this.gameObject);
         }
         #endregion
@@ -94,7 +85,6 @@ namespace Systems.Entities
         {
             _timer.Update();
         }
-
         #endregion
     }
 }

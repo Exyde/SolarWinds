@@ -1,5 +1,3 @@
-using Vibrant;
-using Vibrant.Core;
 using Systems.Entities;
 
 public class Wolf : Entity

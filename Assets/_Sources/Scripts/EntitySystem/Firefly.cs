@@ -2,6 +2,7 @@ using UnityEngine;
 using Systems.Entities;
 public class Firefly : Entity
 {
+    [Header("Firefly")]
     public GameObject _target; //Player
     public float _speed = 5f;
     public float timeBetweenTargetUpdate = 1f;
@@ -17,8 +18,9 @@ public class Firefly : Entity
         timeBetweenTargetUpdate += Random.Range(.1f, 6f);
     }
 
-    void Update()
+    public void Update()
     {
+        base.Update();
         transform.position = Vector3.MoveTowards(transform.position, targetPos, _speed * Time.deltaTime);
     }
 

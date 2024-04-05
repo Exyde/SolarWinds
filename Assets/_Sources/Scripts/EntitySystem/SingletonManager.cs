@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Vibrant.Core
 {
+    [DefaultExecutionOrder(-99)]
     public abstract class SingletonManager<T1, T2> : MonoBehaviour where T1 : SingletonManager<T1, T2>
     {
         public static T1 Instance = null;

@@ -42,7 +42,7 @@ namespace Vibrant
             }
         }
         
-        [MenuItem("Tools/Texture Packer")]
+        [MenuItem("Vibrant/Texture Packer")]
         private static void CreateWizard()
         {
             DisplayWizard<TexturePackerWizard>("Texture Packer", "Pack", "Clear");

@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: ED_Firefly
   m_EditorClassIdentifier: 
   _prefab: {fileID: 8556443827941117289, guid: 74364132dff2da74790c9ba630d7ad98, type: 3}
-  _name: Firefly Entity
+  _name: Mech Bird
   _randomizeSpawnPos: 0
   randomSpawnRandomness: {x: 0, y: 0, z: 0}
   _maxLifetime: 100
-  _lossOnTick: 5
+  _lossOnTick: 20
   _randomizeLifetime: 0
   _randLifetime: {x: 0, y: 0}
   _scaleMinMax: {x: 0, y: 0}

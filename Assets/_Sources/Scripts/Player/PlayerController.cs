@@ -3,29 +3,25 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour 
 {
-    #region Fields
-    // Public Fields
-    [Header("Camera Stuffs")]
+    #region Global Members
+    [Header("Camera")]
     public Camera _mainCamera;
 
-    [Header("FPS Settings")]
-    public float _walkingSpeed = 7.5f;
-    public float _runningSpeed = 11.5f;
-    public float _jumpSpeed = 8.0f;
-    public float _gravity = 20.0f;
-    public float _lookSpeed = 2.0f;
-    public float _lookXLimit = 45.0f;
+    [Header("Controller Settings")]
+    [SerializeField] float _walkingSpeed = 7.5f;
+    [SerializeField] float _runningSpeed = 11.5f;
+    [SerializeField] float _jumpSpeed = 8.0f;
+    [SerializeField] float _gravity = 20.0f;
+    [SerializeField] float _lookSpeed = 2.0f;
+    [SerializeField] float _lookXLimit = 45.0f;
 
-    //Private Fields
-    CharacterController _characterController;
-    Vector3 _moveDirection = Vector3.zero;
-    Rigidbody _rb;
-    float _rotationX = 0;
+    private CharacterController _characterController;
+    private Vector3 _moveDirection = Vector3.zero;
+    private float _rotationX = 0;
 
     public bool _useLegacyCamera = false;
     public bool _canMove = true;
     public bool _canMoveCamera = true;
-
     #endregion
    
     public void TogglePlayerMovement(bool state) => _canMove = state;
@@ -35,8 +31,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _characterController = GetComponent<CharacterController>();
-        _rb = GetComponent<Rigidbody>();
-
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }

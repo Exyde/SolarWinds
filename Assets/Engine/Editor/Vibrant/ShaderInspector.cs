@@ -60,7 +60,7 @@ namespace Vibrant
         #endregion
 
         #region Core Behavior
-        [MenuItem("Tools/Shader Inspector")]
+        [MenuItem("Vibrant/Shader Inspector")]
         public static void ShowWindow()
         {
             var window = GetWindow<ShaderInspector>("Shader Inspector");

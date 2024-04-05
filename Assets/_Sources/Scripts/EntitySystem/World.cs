@@ -10,15 +10,13 @@ namespace Systems.Entities
 {
     public class World : SingletonManager<World, IEntity>, ISerializationCallbackReceiver
     {
+        #region Global Members
+        
         public static readonly float TickTime = 1F;
-
-        Coroutine _forestRoutine;
-
         [Header("Forests")]
         [SerializeField] List<GameObject> _treePrefabs;
         [SerializeField][Range(1, 1000)] int _treeCount;
         [SerializeField] Transform _treeHolder;
-        [SerializeField] bool _resetForests;
 
         [Header ("Fireflies")]
         [SerializeField] GameObject _fireflyPrefab;
@@ -33,6 +31,10 @@ namespace Systems.Entities
         [Header("Debug")]
         [SerializeField] private List<Entity> _debugRegisteredEntities = new();
         
+        private Coroutine _forestRoutine;
+        #endregion
+
+        
         #region Core Behavior
         private void OnEnable()
         {
@@ -43,18 +45,13 @@ namespace Systems.Entities
 
         private void Start()
         {
-            GenerateForest();
-            GenerateFireflies();
-        }
-
-        public void GenerateForest(){
             _forestRoutine = StartCoroutine(CGenerateForest());
+
+            //Check
+            _fireflyHolder.Clear();
+            SpawnCreatures(_entityDatas[0], _fireflyCount, _fireflyHolder, _fireflyHeightDistributionCurve);
         }
 
-        public void GenerateFireflies(){
-            SpawnFireflies();
-        }
-        
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -80,20 +77,23 @@ namespace Systems.Entities
 
             SpawnEntity(entity, Vector3.zero.RandomPosInCircle(20));
         }
+        
+ 
+        private void SpawnCreatures(EntityData entity, int creatureCount, Transform creatureHolder, AnimationCurve heightCurve = null){
+            for (int i = 0; i < creatureCount; i++){
+                Vector3 randomPosition = _terrain.GetRandomTerrainPosition();
+                randomPosition += heightCurve == null ? Vector3.up * _fireflyHeightDistributionCurve.Evaluate(Random.value) * _terrain.Data.size.y : Vector3.zero;
+                //Vector3 randomRotation = new Vector3(0, Random.Range(0, 360), 0);
+                SpawnEntity(entity, randomPosition, creatureHolder);
+            }
+        }
         #endregion
         
-        void ClearCreatures(Transform creatureHolder){
-            creatureHolder.Clear();
-        }
-        public void SpawnFireflies(){
-            ClearCreatures(_fireflyHolder);
-            SpawnCreatures(_entityDatas[0], _fireflyCount, _fireflyHolder, _fireflyHeightDistributionCurve);
-        }
-        
+        #region Forest
         IEnumerator CGenerateForest(){
-
-            if (_resetForests) ClearForest();
-        
+            
+            ClearForest();
+            
             for (int i = 0; i < _treeCount; i++){
                 Vector3 randomPosition = _terrain.GetRandomTerrainPosition();
                 Vector3 randomRotation = new Vector3(0, Random.Range(0, 360), 0);
@@ -116,7 +116,6 @@ namespace Systems.Entities
                         tree.name = $"Tree {i}";
                         tree.transform.parent = _treeHolder;
                     }
-                
                 }
             }
 
@@ -127,17 +126,8 @@ namespace Systems.Entities
             if(_forestRoutine != null) StopCoroutine(_forestRoutine);
             _treeHolder.Clear();
         }
-        
-        private void SpawnCreatures(EntityData entity, int creatureCount, Transform creatureHolder, AnimationCurve heightCurve = null){
-            for (int i = 0; i < creatureCount; i++){
-                Vector3 randomPosition = _terrain.GetRandomTerrainPosition();
-                randomPosition += heightCurve == null ? Vector3.up * _fireflyHeightDistributionCurve.Evaluate(Random.value) * _terrain.Data.size.y : Vector3.zero;
-                Vector3 randomRotation = new Vector3(0, Random.Range(0, 360), 0);
-                
-                SpawnEntity(entity, randomPosition, creatureHolder);
-            }
-        }
-        
+        #endregion
+
         #region Serialization
         public void OnBeforeSerialize()
         {
