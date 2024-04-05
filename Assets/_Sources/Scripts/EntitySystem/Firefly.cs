@@ -1,6 +1,6 @@
 using UnityEngine;
 using Systems.Entities;
-public class FireflyTest : Entity
+public class Firefly : Entity
 {
     public GameObject _target; //Player
     public float _speed = 5f;

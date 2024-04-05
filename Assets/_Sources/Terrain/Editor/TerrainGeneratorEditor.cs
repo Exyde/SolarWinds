@@ -22,11 +22,11 @@ public class TerrainGeneratorEditor : Editor
         GUILayout.BeginHorizontal();
 
         if (GUILayout.Button("Generate Forest")){
-            _terrainGenerator.GenerateForest();
+            //_terrainGenerator.GenerateForest();
         }
 
         if (GUILayout.Button("Clear Forest")){
-            _terrainGenerator.ClearForest();
+            //_terrainGenerator.ClearForest();
         }
 
         GUILayout.EndHorizontal();
@@ -34,7 +34,7 @@ public class TerrainGeneratorEditor : Editor
         GUILayout.BeginHorizontal();
 
         if (GUILayout.Button("Generate Fireflies")){
-            _terrainGenerator.GenerateFireflies();
+            //_terrainGenerator.GenerateFireflies();
         }
 
         GUILayout.EndHorizontal();

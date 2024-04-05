@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class TerrainGenerator : MonoBehaviour
 {
     [SerializeField] LayerMask _groundLayer;
@@ -38,11 +37,8 @@ public class TerrainGenerator : MonoBehaviour
     [SerializeField] int _fireflyCount;
     [SerializeField] Transform _fireflyHolder;
     [SerializeField] AnimationCurve _fireflyHeightDistributionCurve;
-    
-    private void Start(){
-        GenerateForest();
-        GenerateFireflies();
-    }
+
+    public TerrainData Data => _terrainData;
 
     public void GenerateTerrainData(){
         _terrainData = new TerrainData();
@@ -60,7 +56,7 @@ public class TerrainGenerator : MonoBehaviour
 
         transform.position = new Vector3(-_terrainSize.x/2, 0, -_terrainSize.z/2);
 
-        if (_autoUpdateForest) GenerateForest();
+        //if (_autoUpdateForest) GenerateForest();
 
     }
 
@@ -82,31 +78,8 @@ public class TerrainGenerator : MonoBehaviour
         return map;
     }
 
-    Coroutine _forestRoutine; 
-    public void GenerateForest(){
-        _forestRoutine = StartCoroutine(CGenerateForest());
-    }
 
-    public void GenerateFireflies(){
-        SpawnFireflies();
-    }
-    public void SpawnCreatures(GameObject creaturePrefab, int creatureCount, Transform creatureHolder, AnimationCurve heightCurve = null){
-        for (int i = 0; i < creatureCount; i++){
-            Vector3 randomPosition = GetRandomTerrainPosition();
-            randomPosition += heightCurve == null ? Vector3.up * _fireflyHeightDistributionCurve.Evaluate(Random.value) * _terrainData.size.y : Vector3.zero;
-            Vector3 randomRotation = new Vector3(0, Random.Range(0, 360), 0);
-            GameObject creature = Instantiate(creaturePrefab, randomPosition, Quaternion.Euler(randomRotation));
-            creature.transform.parent = creatureHolder;
-        }
-    }
 
-    void ClearCreatures(Transform creatureHolder){
-        creatureHolder.Clear();
-    }
-    public void SpawnFireflies(){
-        ClearCreatures(_fireflyHolder);
-        SpawnCreatures(_fireflyPrefab, _fireflyCount, _fireflyHolder, _fireflyHeightDistributionCurve);
-    }
     public Vector3 GetRandomTerrainPosition(){
         float halfTerrainX = _terrainData.size.x / 2;
         float halfTerrainZ = _terrainData.size.z / 2;
@@ -116,44 +89,5 @@ public class TerrainGenerator : MonoBehaviour
         return randomPosition;
     }
 
-    IEnumerator CGenerateForest(){
 
-        if (_resetForests) ClearForest();
-
-
-
-        for (int i = 0; i < _treeCount; i++){
-            Vector3 randomPosition = GetRandomTerrainPosition();
-            Vector3 randomRotation = new Vector3(0, Random.Range(0, 360), 0);
-
-            //Debug.DrawLine(randomPosition, randomPosition + Vector3.down * verticalRaycastStart * 100f, Color.red, 3f);
-
-            if (Physics.Raycast(randomPosition, Vector3.down, out RaycastHit hit, Mathf.Infinity)){
-                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Water")){
-                    --i;
-                    continue;
-                }
-
-                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground")){
-
-                    GameObject _treePrefab = _treePrefabs[Random.Range(0, _treePrefabs.Count)];
-                    randomPosition = hit.point;
-                    GameObject tree = Instantiate(_treePrefab, randomPosition, Quaternion.Euler(randomRotation));
-
-                    tree.transform.localScale = Vector3.one * Random.Range(0.5f, 2f);
-                    tree.name = $"Tree {i}";
-                    tree.transform.parent = _treeHolder;
-                }
-                
-
-            }
-        }
-
-        yield return null;
-    }
-
-    public void ClearForest(){
-        if(_forestRoutine != null) StopCoroutine(_forestRoutine);
-        _treeHolder.Clear();
-    }
 }

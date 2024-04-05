@@ -17,7 +17,7 @@ namespace EnhancedEditor.Editor
 {
     /// <summary>
     /// <see cref="ScriptableObject"/> registering all instances of a specific <see cref="Component"/> in each scenes of the project.
-    /// <br/> Usefull to keep track of important objects.
+    /// <br/> Useful to keep track of important objects.
     /// </summary>
     [InitializeOnLoad]
     public class InstanceTracker : ScriptableObject

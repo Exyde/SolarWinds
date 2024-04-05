@@ -75,6 +75,7 @@ git config --global init.defaultBranch main 			//Change the default branch name 
 git config user.name				// read a specific key
 git help config 					//open doc offline
 git config -h 						//terminal help
-
+git clone url optinnal repo name 	//you can specifiy the repo name !
 ## Framework Questions
 - Logger as dll ? How ?
+

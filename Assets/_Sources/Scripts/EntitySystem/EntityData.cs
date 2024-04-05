@@ -3,6 +3,7 @@ using UnityEngine.Serialization;
 using Random =  UnityEngine.Random;
 
 namespace Systems.Entities
+
 {
     [CreateAssetMenu(menuName = "Vibrant/Entity", fileName = "ED_New Entity")]
     public class EntityData : ScriptableObject
@@ -51,13 +52,6 @@ namespace Systems.Entities
         public float SpawnScaleMultiplier => _randomizeScale ? Random.Range(_scaleMinMax.x, _scaleMinMax.y): 1;
 
         #endregion
-
-        private void OnValidate()
-        {
-            if(!string.IsNullOrEmpty(_name))
-            {
-               // name = $"CD_{_name}";
-            }
-        }
+        
     }
 }
