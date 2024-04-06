@@ -73,3 +73,46 @@ to make similar or recursive components within the creature
 - Input : Sensors Values (Environment Infos)
 - Output : Effector Values (Muscle Control)
   - Applied as forces or torques on degrees of freedom
+
+
+# Genetic Algo
+
+**Genotype** : The DNA, will be passed from gen to gen. Variate, mutate.
+**Phenotype** : The expression of the *genotype*. How tall, small, fast, mesh, color, etc...
+
+Example with Color :
+- Phenotype : 0, 127, 255
+- Genotype : White, Gray, Black
+
+## Darwin Principles
+- Heredity : Mechanism that allow to pass trait from parent to children
+- Variation : Variation of traits in a population, also I guess it take small variation in heredity + random mutation probability.
+- Selection : Survival of the fittest, meaning "able to reproduce". 
+  A mechanism that allow only a subset of the parents to reproduce, the most adapted to the environment or problem.
+
+## Steps
+- 1 : **Create a population of N Elements, each with randomly generated DNA** (Example of cats with string as dna)
+  - Generate a various population (the more you have, the more likely some will be able to fit the goal, or at least have a chance to evolve)
+- 2 : **Selection**
+  - **Evaluate Fitness**
+    - Produce and evaluate a score for a given element. 
+    - Example with cat : car, box, hur scores 2, 0, and 1. 
+  - **Create a mating pool**
+    - Use a probabilistic method like the *wheel of fortune**
+    - Normalize each fitness score and express them as percent.
+      - Sums all fitness score and divide each by the sums, you'll get a %
+      - Now each element get it's own % of reproduction chance / to be added to the pool ?
+- 3 : **Reproduction**
+  You could pick one and reproduce with itself, but it breaks variety. We'll use a couple approach.
+  - **Crossover**
+    - That's a way of mixing the genotype from parent.
+      - Flip coin and pick 50/50 a letter from parent A or B
+      - Or, pick First half in A et other half in B
+  - **Mutation**
+    - It help ton counter-balance the fact that the population was initially created randomly on a limited subset of genotype expression.
+    - It's an option
+    - Express as a *rate* for the GA.
+      - 5% rate mean that every gene will have 5% chance of mutate. 
+        - Here for our cat example, a 1% rate mean each letter has 1% chance to mutate = select a totally new random letter
+  
+Then the children become the new population, and we repeat back to step 2 for X generation until we solve !
