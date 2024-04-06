@@ -10,12 +10,10 @@ namespace EnhancedEditor {
     /// <summary>
     /// <see cref="EnhancedEditor"/>-related general utility class.
     /// </summary>
-	public class InternalUtility {
+	public static class InternalUtility {
         #region Content
-        /// <summary>
-        /// Name of this plugin.
-        /// </summary>
-        public const string Name            = "Enhanced Editor";
+
+        private const string Name            = "Enhanced Editor";
 
         /// <summary>
         /// Menu path prefix used for creating new <see cref="ScriptableObject"/>, or any other special menu.
@@ -23,7 +21,7 @@ namespace EnhancedEditor {
         public const string MenuPath        = Name + "/";
 
         /// <summary>
-        /// Menu item path used for <see cref="EnhancedFramework"/> utilities.
+        /// Menu item path used for various utilities.
         /// </summary>
         public const string MenuItemPath    = "Tools/" + MenuPath;
 

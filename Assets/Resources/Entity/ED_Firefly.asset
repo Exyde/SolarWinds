@@ -50,3 +50,23 @@ MonoBehaviour:
   _offspringCount: 1
   _offspringProbability: 80
   _deathMaterial: {fileID: 2100000, guid: 41b3b460cf67db941b3af9d5cdc147cc, type: 2}
+  _behaviors:
+  - name: Follow Behavior
+    type:
+      typeName: Systems.Entities.FollowBehavior, Assembly-CSharp
+      constraints: 0
+      interfaces: []
+    value:
+      rid: 432193962794549351
+    doFullCopy: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 432193962794549351
+      type: {class: FollowBehavior, ns: Systems.Entities, asm: Assembly-CSharp}
+      data:
+        priority: 99
+        _target: {fileID: 0}
+        _speed: 5
+        timeBetweenTargetUpdate: 1
+        _targetType: {fileID: 11400000}

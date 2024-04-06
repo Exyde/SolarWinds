@@ -1,21 +1,19 @@
+using System.Collections.Generic;
+using EnhancedEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random =  UnityEngine.Random;
 
 namespace Systems.Entities
-
 {
     [CreateAssetMenu(menuName = "Vibrant/Entity", fileName = "ED_New Entity")]
     public class EntityData : ScriptableObject
     {
-        //Todo : Back to one entity script with editable behavior like action/skills in inspector ? how ? see avalanche / lucas
-        //Humm Finally back to the idea to have multiples components just like in the ParticleSystem and to compoose anything with appropaite modules
-       
         [Header("Spawning")]
         [SerializeField] GameObject _prefab;
         [SerializeField] private string _name;
         [SerializeField] private bool _randomizeSpawnPos;
-        [FormerlySerializedAs("_spawnRandomness")] [SerializeField] private Vector3 randomSpawnRandomness;
+        [SerializeField] private Vector3 randomSpawnRandomness;
         
         [Header("Lifetime")]
         [SerializeField] private float _maxLifetime;
@@ -29,12 +27,15 @@ namespace Systems.Entities
         
         [Header("Offsprings")]
         [SerializeField] private EntityData _offspring;
-        [SerializeField, Range(0, 8)] private int _offspringCount;
-        [SerializeField, Range(0, 100)] private float _offspringProbability;
+        [SerializeField, UnityEngine.Range(0, 8)] private int _offspringCount;
+        [SerializeField, UnityEngine.Range(0, 100)] private float _offspringProbability;
 
         [Header("Death")]
         [SerializeField] private Material _deathMaterial;
 
+        [Header("Behaviors")] [SerializeField] private List<PolymorphValue<EntityBehavior>> _behaviors;
+        public List<PolymorphValue<EntityBehavior>> Behaviours => _behaviors;
+        
         #region Getters
         public string Name => _name;
         public GameObject Prefab => _prefab;

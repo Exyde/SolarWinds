@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using EnhancedEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using Core = Engine.Core;
@@ -11,11 +13,9 @@ namespace Systems.Entities
         [SerializeField] private EntityData _entityData;
         [SerializeField] private float _currentLifetime;
         [SerializeField] private Vibrant.Core.Timer _timer;
-        
-        private void LogInnerState()
-        {
-            //Engine.Core.Instance.Logger.Log($"[Entity] : {_entityData.Name} with  [{_currentLifetime} / {_entityData.SpawnLifetime}]");
-        }
+
+        private List<PolymorphValue<EntityBehavior>> _behaviours;
+        private EntityBehavior _currentBehavior;
         
         #region IEntity
         public virtual void Birth()
@@ -25,13 +25,13 @@ namespace Systems.Entities
 
             _timer = new Vibrant.Core.Timer();
             _timer.RegisterEndEvent(Tick);
+            _timer.RegisterEndEvent(_currentBehavior.Process);
         }
 
         public virtual void Tick()
         {
             _currentLifetime -= _entityData.LossOnTick;
             _currentLifetime = Math.Clamp(_currentLifetime, 0, _entityData.SpawnLifetime);
-            LogInnerState();
 
             if (_currentLifetime <= 0)
             {
@@ -77,6 +77,10 @@ namespace Systems.Entities
         {
             _currentLifetime = _entityData.SpawnLifetime;
             transform.localScale *= _entityData.SpawnScaleMultiplier;
+
+            _behaviours = _entityData.Behaviours;
+
+            _currentBehavior = _behaviours[0];
             
             Birth();
         }
