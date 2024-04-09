@@ -1,6 +1,7 @@
 using UnityEngine;
 
 public static class StringExtension {
+    static readonly System.Random Random = new ();
     public static string Bold(this string str) => "<b>" + str + "</b>";
     public static string Color(this string str,string clr) => $"<color={clr}>{str}</color>";
     public static string Color(this string str, Color color) => str.Color($"#{ColorUtility.ToHtmlStringRGBA(color)}");
@@ -22,9 +23,14 @@ public static class StringExtension {
         return random;
     }
 
-    static System.Random _random = new ();
     public static string GetRandomLetter()
     {
-        return ((char)_random.Next('a', 'z')).ToString();
+        return GetRandomChar().ToString();
+    }
+
+    public static char GetRandomChar()
+    {
+        return ((char)Random.Next('a', 'z'));
+
     }
 }

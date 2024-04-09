@@ -1,31 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Engine.Extensions;
 using EnhancedEditor;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-namespace _Sources.Scripts.Genetics
+namespace Genetics
 {
+    
+    //Todo : I need to understand why the mating pool quality is getting worse over time instead of better
     public class Shakespear : MonoBehaviour
     {
         public int generations = 100;
         [UnityEngine.Range(0f, 100f)] public float mutationRate = 1;
         public int populationSize = 100;
 
-        [SerializeField] private List<string> population = new();
+        [SerializeField] private List<DNA> population = new();
+
+        private List<int> notEmptyIndex = new List<int>();
+
+        private List<DNA> _matingPool = new();
 
         [SerializeField] private string targetPhrase = "hello";
+
+        private int _emptyMatingPoolCount = 0;
 
         [Button(ActivationMode.Always)]
         public void Simulate()
         {
             Setup();
+            
+            //LogPopulation(population);
 
             for (var i = 0; i < generations; i++)
             {
-                Evolve();
+                if (population == null)
+                {
+                    Debug.Log("Aborted. No more fit candidate.");
+                    break;
+                }
+                ProcessGeneration(i);
             }
+            
         }
         
         /// <summary>
@@ -33,84 +48,137 @@ namespace _Sources.Scripts.Genetics
         /// </summary>
         public void Setup()
         {
-            population = new List<string>();
+            notEmptyIndex.Clear();
+            _emptyMatingPoolCount = 0;
+            _matingPool = new List<DNA>();
+            population = new List<DNA>();
+            
             int wordSize = targetPhrase.Length;
 
             for (var i = 0; i < populationSize; i++)
             {
-                var creature = StringExtension.GetRandomString(wordSize);
-                population.Add(creature);
+                population.Add(new CatStringDNA(wordSize));
             }
         }
 
-        public void Evolve()
+        public void ProcessGeneration(int genIndex)
         {
-            Selection();
-            Reproduction();
-            
+            Selection(genIndex);
+            var nextGeneration = Reproduction();
+
             //Replaced old population with the new one
+
+            if (nextGeneration == null)
+            {
+                
+                LogPopulation(population);
+                Debug.Log("End Of simulation ");
+                Debug.Log("Empty Mating Pool " + _emptyMatingPoolCount );
+                Debug.Log("Not Empty Indexes ");
+                Debug.Log("Pool Indexes : "  + GetIndexStrings());
+
+
+                string GetIndexStrings()
+                {
+                    string r = "[ ";
+
+                    foreach (var index in notEmptyIndex)
+                    {
+                        r += $" {index} ";
+                    }
+
+                    r += " ]";
+
+                    return r;
+                }
+            }
+            
+            population = nextGeneration;
         }
 
-        public void Selection()
+        public void Selection(int genIndex)
         {
             //Evaluate the fitness score of each element
-            //Build a mating pool
-        }
-
-        public void Reproduction()
-        {
-            //Pick two parent according to relative fitness
-
-            string parentA = "";
-            string parentB = "";
-            
-            string child = CrossOver(parentA, parentB);
-            child = Mutate(child);
-            
-            //Add new child to next gen population
-        }
-
-        /// <summary>
-        /// Create a child by mixing DNA of parents
-        /// </summary>
-        /// <param name="A">Parent A</param>
-        /// <param name="B">Parent B</param>
-        /// <returns></returns>
-        public string CrossOver(string A, string B)
-        {
-            string child = "";
-
-            for (var i = 0; i < targetPhrase.Length; i++)
+            foreach (var element in population)
             {
-                //Pick a random gene in parent at 50% chance
-                child += (Random.Range(0, 100) < 50) ? A[i] : B[i];
+                element.EvaluateFitness(targetPhrase);
             }
-
-            return child;
+            
+            UpdateMatingPool(genIndex);
         }
 
-        /// <summary>
-        ///  Modify the child genes based on mutationRate
-        /// </summary>
-        /// <param name="child">the string to mutate</param>
-        /// <returns></returns>
-        public string Mutate(string child)
+        private void UpdateMatingPool(int genIndex)
         {
-            var mutation = "";
+            _matingPool.Clear();
+            _matingPool = new List<DNA>();
 
-            foreach (var gene in child)
-            {
-                if (Random.Range(0, 100) < mutationRate)
-                {
-                    mutation += StringExtension.GetRandomLetter();
-                    continue;
-                }
+           foreach (var dna in population)
+           {
+               var occurence = (dna.FitnessScore * 10);
 
-                mutation += gene;
-            }
+               for (int i = 0; i < occurence; i++)
+               {
+                   _matingPool.Add(dna);
+               }
+           }
 
-            return mutation;
+           if (_matingPool.Count != 0)
+           {
+               //LogPopulation(_matingPool);
+               notEmptyIndex.Add(genIndex);
+           }
         }
+
+        public List<DNA> Reproduction()
+        {
+            var nextGeneration = new List<DNA>();
+
+            if (_matingPool.Count == 0)
+            {
+                return null;
+                _emptyMatingPoolCount++;
+                nextGeneration = population;
+                return nextGeneration;
+            }
+            
+
+            for (int i = 0; i < populationSize; i++)
+            {
+                //Pick two parent according to relative fitness
+                DNA parentA = GetFitCandidate();
+                DNA parentB = GetFitCandidate();
+            
+                var child = parentA.CrossOver(parentB);
+                child.Mutate();
+            
+                //Add new child to next gen population
+                nextGeneration.Add(child);
+            }
+            
+            return nextGeneration;
+        }
+
+        private DNA GetFitCandidate()
+        {
+            var index = new System.Random().Next(_matingPool.Count);
+            
+            if (index < 0 || index >= _matingPool.Count)
+            {
+                Debug.LogError("Criminal Index " + index);
+            }
+            return _matingPool[index];
+        }
+
+        public void LogPopulation(List<DNA> pop)
+        {
+            int index = 1;
+            foreach (var dna in pop)
+            {
+                dna.LogSelf(index);
+                index++;
+            }
+        }
+        
 
     }
 }
