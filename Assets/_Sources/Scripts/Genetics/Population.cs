@@ -1,20 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Engine.Extensions;
-using EnhancedEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Genetics
 {
-    public class StepShakeSpear : MonoBehaviour
+    [Serializable]
+    public class Population
     {
-        public int iterations = 1000;
-        public int populationSize = 1000;
-        public string targetString = "hello";
-        class DNA
+        [Serializable]
+        public class DNA
         {
-            private char[] _genes;
-            private int _length;
-            private float _fitness;
+            [SerializeField] private char[] _genes;
+            [SerializeField] private int _length;
+            [SerializeField] private float _fitness;
             private float mutationRate;
 
             public float Fitness => _fitness;
@@ -92,51 +92,49 @@ namespace Genetics
             }
         }
 
-        private DNA[] _population;
         
-        [Button(ActivationMode.Always)]
-        public void Simulate()
+        [SerializeField] private DNA[] _individuals;
+
+        [SerializeField] private int _count;
+        [SerializeField] private float _mutationRate;
+        [SerializeField] private string _targetString;
+
+        public Population(int count, string targetString, float mutationRate = 0.01f)
         {
-            Setup();
+            _count = count;
+            _mutationRate = mutationRate;
+            _targetString = targetString;
+        }
 
-            foreach (var dna in _population)
-            {
-                dna.Log();
-            }
-
-            for (int i = 0; i < iterations; i++)
-            {
-                Run();
-            }
+        public void Init()
+        {
+            _individuals = new DNA[_count];
             
-            foreach (var dna in _population)
+            for (int i = 0; i < _count; i++)
+            {
+                _individuals[i] = new DNA(_targetString.Length);
+            }  
+        }
+        public void Log()
+        {
+            foreach (var dna in _individuals)
             {
                 dna.Log();
             }
         }
-
-        private void Setup()
+        public void UpdateFitness()
         {
-            _population = new DNA[populationSize];
-
-            for (int i = 0; i < populationSize; i++)
+            foreach (var dna in _individuals)
             {
-                _population[i] = new DNA(targetString.Length);
+                dna.CalculateFitness(_targetString);
             }
         }
 
-        private void Run()
+        private List<DNA> GetMatingPool()
         {
-            //Fitness
-            foreach (var dna in _population)
-            {
-                dna.CalculateFitness(targetString);
-            }
-
-            //Mating Pool
             List<DNA> matingPool = new List<DNA>();
             
-            foreach (var dna in _population)
+            foreach (var dna in _individuals)
             {
                 var occurence = Mathf.Floor(dna.Fitness * 100);
                 
@@ -146,9 +144,14 @@ namespace Genetics
                 }
             }
 
-            //Reproduction and Mutation
+            return matingPool;
+        }
 
-            for (int i = 0; i < populationSize; i++)
+        public void ToNextGeneration()
+        {
+            var matingPool = GetMatingPool();
+
+            for (int i = 0; i < _count; i++)
             {
                 DNA parentA = matingPool.GetRandomElement();
                 DNA parentB = matingPool.GetRandomElement();
@@ -156,7 +159,7 @@ namespace Genetics
                 DNA child = parentA.CrossOver(parentB);
                 child.Mutate();
 
-                _population[i] = child;
+                _individuals[i] = child;
             }
         }
     }

@@ -6,8 +6,6 @@ using UnityEngine;
 
 namespace Genetics
 {
-    
-    //Todo : I need to understand why the mating pool quality is getting worse over time instead of better
     public class Shakespear : MonoBehaviour
     {
         public int generations = 100;
