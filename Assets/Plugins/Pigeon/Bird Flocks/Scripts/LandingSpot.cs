@@ -1,27 +1,26 @@
-
 ///	Copyright Unluck Software /// www.chemicalbliss.com																															
 
 using UnityEngine;
 using System.Collections;
-public class LandingSpot :MonoBehaviour
+using UnityEngine.Serialization;
+
+public class LandingSpot : MonoBehaviour
 {
-	[HideInInspector]
 	public FlockChild _landingChild;
-	[HideInInspector]
 	public bool _landing;
 	public LandingSpotController _controller;
-	public Transform _transformCache;                    // Reference to transform component
+	public Transform _t;                   
 	public Vector3 _preLandWaypoint;
+	
 	Vector3 _cachePreLandingWaypoint;
 	float _distance;
-
-
+	
 	public void Start()
 	{
-		if (_transformCache == null) _transformCache = transform;
+		if (_t == null) _t = transform;
 		_cachePreLandingWaypoint = _preLandWaypoint;
 		if (_controller == null)
-			_controller = _transformCache.parent.GetComponent<LandingSpotController>();
+			_controller = _t.parent.GetComponent<LandingSpotController>();
 		if (_controller._autoCatchDelay.x > 0)
 			StartCoroutine(GetFlockChild(_controller._autoCatchDelay.x, _controller._autoCatchDelay.y));
 		if (_controller._randomRotate && _controller._parentBirdToSpot)
@@ -33,28 +32,28 @@ public class LandingSpot :MonoBehaviour
 #if UNITY_EDITOR
 	public void OnDrawGizmos()
 	{
-		if (_transformCache == null) _transformCache = transform;
+		if (_t == null) _t = transform;
 		if (_controller == null)
-			_controller = _transformCache.parent.GetComponent<LandingSpotController>();
+			_controller = _t.parent.GetComponent<LandingSpotController>();
 		if (!_controller._drawGizmos) return;
 		Gizmos.color = Color.yellow;
 		// Draw a yellow cube at the transforms position
 		if ((_landingChild != null) && _landing)
-			Gizmos.DrawLine(_transformCache.position, _landingChild._thisT.position);
-		if (_transformCache.rotation.eulerAngles.x != 0 || _transformCache.rotation.eulerAngles.z != 0)
-			_transformCache.eulerAngles = new Vector3(0.0f, _transformCache.eulerAngles.y, 0.0f);
-		Gizmos.DrawCube(new Vector3(_transformCache.position.x, _transformCache.position.y, _transformCache.position.z), Vector3.one * _controller._gizmoSize);
-		Gizmos.DrawCube(_transformCache.position + (_transformCache.forward * _controller._gizmoSize), Vector3.one * _controller._gizmoSize * .5f);
+			Gizmos.DrawLine(_t.position, _landingChild._thisT.position);
+		if (_t.rotation.eulerAngles.x != 0 || _t.rotation.eulerAngles.z != 0)
+			_t.eulerAngles = new Vector3(0.0f, _t.eulerAngles.y, 0.0f);
+		Gizmos.DrawCube(new Vector3(_t.position.x, _t.position.y, _t.position.z), Vector3.one * _controller._gizmoSize);
+		Gizmos.DrawCube(_t.position + (_t.forward * _controller._gizmoSize), Vector3.one * _controller._gizmoSize * .5f);
 		if(_preLandWaypoint != Vector3.zero)
 		{
 			Gizmos.color = Color.blue;
-			Gizmos.DrawCube(_transformCache.position + _preLandWaypoint, Vector3.one * _controller._gizmoSize * .25f);
+			Gizmos.DrawCube(_t.position + _preLandWaypoint, Vector3.one * _controller._gizmoSize * .25f);
 		}
-		if (_transformCache.parent.GetChild(0) != _transformCache) return;
+		if (_t.parent.GetChild(0) != _t) return;
 		Gizmos.color = new Color(1.0f, 1.0f, 0.0f, 1f);
-		Gizmos.DrawWireSphere(_transformCache.position, _controller._maxBirdDistance);
+		Gizmos.DrawWireSphere(_t.position, _controller._maxBirdDistance);
 		Gizmos.color = new Color(1.0f, 0.0f, 0.0f, 1f);
-		Gizmos.DrawWireSphere(_transformCache.position, _controller._minBirdDistance);
+		Gizmos.DrawWireSphere(_t.position, _controller._minBirdDistance);
 	}
 #endif
 	public IEnumerator GetFlockChild(float minDelay, float maxDelay)
@@ -69,24 +68,24 @@ public class LandingSpot :MonoBehaviour
 				if (child != null && !child._landing && child.gameObject.activeInHierarchy)
 				{
 					child._landingSpot = this;
-					_distance = Vector3.Distance(child._thisT.position, _transformCache.position);
+					_distance = Vector3.Distance(child._thisT.position, _t.position);
 					if (!_controller._onlyBirdsAbove)
 					{
 						if ((foundChild == null) && _controller._maxBirdDistance > _distance && _controller._minBirdDistance < _distance)
 						{
 							foundChild = child;
 							if (!_controller._takeClosest) break;
-						} else if ((foundChild != null) && Vector3.Distance(foundChild._thisT.position, _transformCache.position) > _distance)
+						} else if ((foundChild != null) && Vector3.Distance(foundChild._thisT.position, _t.position) > _distance)
 						{
 							foundChild = child;
 						}
 					} else
 					{
-						if ((foundChild == null) && child._thisT.position.y > _transformCache.position.y && _controller._maxBirdDistance > _distance && _controller._minBirdDistance < _distance)
+						if ((foundChild == null) && child._thisT.position.y > _t.position.y && _controller._maxBirdDistance > _distance && _controller._minBirdDistance < _distance)
 						{
 							foundChild = child;
 							if (!_controller._takeClosest) break;
-						} else if ((foundChild != null) && child._thisT.position.y > _transformCache.position.y && Vector3.Distance(foundChild._thisT.position, _transformCache.position) > _distance)
+						} else if ((foundChild != null) && child._thisT.position.y > _t.position.y && Vector3.Distance(foundChild._thisT.position, _t.position) > _distance)
 						{
 							foundChild = child;
 						}
@@ -113,7 +112,6 @@ public class LandingSpot :MonoBehaviour
 	{
 		if (_controller._flock.gameObject.activeInHierarchy && (_landingChild == null))
 		{
-
 			FlockChild foundChild = null;
 
 			for (int i = 0; i < _controller._flock._roamers.Count; i++)
@@ -142,7 +140,7 @@ public class LandingSpot :MonoBehaviour
 				_landingChild._thisT.position = _landingChild.GetLandingSpotPosition();
 
 				if (_controller._randomRotate) _landingChild._thisT.Rotate(Vector3.up, Random.Range(0f, 360f));
-				else _landingChild._thisT.rotation = _transformCache.rotation;
+				else _landingChild._thisT.rotation = _t.rotation;
 
 				//_landingChild._thisT.position = _transformCache.position + _landingChild._landingPosOffset * _landingChild._thisT.localScale.y;
 
@@ -164,10 +162,7 @@ public class LandingSpot :MonoBehaviour
 		if (_controller._flock.gameObject.activeInHierarchy && _landingChild != null)
 		{
 
-			//	Debug.Log("Release");
 			_preLandWaypoint = _cachePreLandingWaypoint;
-			EmitFeathers();
-			//landingChild._modelT.eulerAngles = new Vector3(0, 0, 0);
 			_landingChild._modelT.localEulerAngles = new Vector3(0, 0, 0);
 			_landing = false;
 			_landingChild._avoid = true;
@@ -180,18 +175,8 @@ public class LandingSpot :MonoBehaviour
 			_landingChild.currentAnim = "";
 			_landingChild.Flap(.1f);
 
-			//if (!landingChild._animationIsBaked)
-			//{
-			//	if (!landingChild._animator) landingChild._modelAnimation.CrossFade(landingChild._spawner._flapAnimation, .2f);
-			//	else landingChild._animator.CrossFade(landingChild._spawner._flapAnimation, .2f);
-			//} else landingChild._bakedAnimator.SetAnimation(0, -1);
-			//landingChild._dived = true;
-			//	landingChild._speed = 0f;
-
-
 			if (_controller._parentBirdToSpot) _landingChild._spawner.AddChildToParent(_landingChild._thisT);
-			//	landingChild.Flap();
-			_landingChild._wayPoint = new Vector3(_landingChild._wayPoint.x+5, _transformCache.position.y + 5, _landingChild._wayPoint.z+5);
+			_landingChild._wayPoint = new Vector3(_landingChild._wayPoint.x+5, _t.position.y + 5, _landingChild._wayPoint.z+5);
 			_landingChild._damping = 0.1f;
 			if (_controller._autoCatchDelay.x > 0)
 			{
@@ -208,22 +193,13 @@ public class LandingSpot :MonoBehaviour
 		}
 	}
 
-	public void RandomRotate()
+	private void RandomRotate()
 	{
-		if (_controller._randomRotate)
-		{
-			Quaternion rot = _transformCache.rotation;
-			Vector3 rotE = rot.eulerAngles;
-			rotE.y = Random.Range(-180, 180);
-			rot.eulerAngles = rotE;
-			_transformCache.rotation = rot;
-		}
-	}
-
-	public void EmitFeathers()
-	{
-		if (_controller._featherPS == null) return;
-		_controller._featherPS.position = _landingChild._thisT.position;
-		_controller._featherParticles.Emit(Random.Range(0, 3));
+		if (!_controller._randomRotate) return;
+		Quaternion rot = _t.rotation;
+		Vector3 rotE = rot.eulerAngles;
+		rotE.y = Random.Range(-180, 180);
+		rot.eulerAngles = rotE;
+		_t.rotation = rot;
 	}
 }

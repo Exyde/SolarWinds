@@ -132,7 +132,7 @@ public class FlockChild :MonoBehaviour
 					//_avoid = true;
 				} else
 				{
-					_wayPoint = _landingSpot._transformCache.position + _landingPosOffset + (_landingOffsetFix * _thisT.localScale.y);
+					_wayPoint = _landingSpot._t.position + _landingPosOffset + (_landingOffsetFix * _thisT.localScale.y);
 				//	_avoid = false;
 				}
 				_damping = _landingSpot._controller._landingTurnSpeedModifier;
@@ -236,17 +236,17 @@ public class FlockChild :MonoBehaviour
 
 	public Vector3 GetLandingSpotPosition()
 	{
-		return _landingSpot._transformCache.position + _landingPosOffset + _landingOffsetFix * _thisT.localScale.y;
+		return _landingSpot._t.position + _landingPosOffset + _landingOffsetFix * _thisT.localScale.y;
 	}
 	
 	public void RotateBird()
 	{
-		if (!_landingSpot._controller._rotateAfterLanding || _thisT.rotation.eulerAngles == _landingSpot._transformCache.rotation.eulerAngles) return;
+		if (!_landingSpot._controller._rotateAfterLanding || _thisT.rotation.eulerAngles == _landingSpot._t.rotation.eulerAngles) return;
 		Quaternion rot = _landingSpot._landingChild._thisT.rotation;
 		Vector3 rotE = rot.eulerAngles;
-		rotE.x = Mathf.LerpAngle(_thisT.rotation.eulerAngles.x, _landingSpot._transformCache.rotation.eulerAngles.x, _landingSpot._controller._landedRotateSpeed * _spawner._newDelta);
-		rotE.z = Mathf.LerpAngle(_thisT.rotation.eulerAngles.z, _landingSpot._transformCache.rotation.eulerAngles.z, _landingSpot._controller._landedRotateSpeed * _spawner._newDelta);
-		rotE.y = Mathf.LerpAngle(_thisT.rotation.eulerAngles.y, _landingSpot._transformCache.rotation.eulerAngles.y, _landingSpot._controller._landedRotateSpeed * _spawner._newDelta);
+		rotE.x = Mathf.LerpAngle(_thisT.rotation.eulerAngles.x, _landingSpot._t.rotation.eulerAngles.x, _landingSpot._controller._landedRotateSpeed * _spawner._newDelta);
+		rotE.z = Mathf.LerpAngle(_thisT.rotation.eulerAngles.z, _landingSpot._t.rotation.eulerAngles.z, _landingSpot._controller._landedRotateSpeed * _spawner._newDelta);
+		rotE.y = Mathf.LerpAngle(_thisT.rotation.eulerAngles.y, _landingSpot._t.rotation.eulerAngles.y, _landingSpot._controller._landedRotateSpeed * _spawner._newDelta);
 		rot.eulerAngles = rotE;
 		_thisT.rotation = rot;
 	}
