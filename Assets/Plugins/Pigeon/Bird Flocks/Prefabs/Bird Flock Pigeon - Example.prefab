@@ -1,0 +1,191 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 400000}
+  - component: {fileID: 5629620477038778926}
+  - component: {fileID: 11400000}
+  m_Layer: 2
+  m_Name: Bird Flock Pigeon - Example
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 10.8921585, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5629620477038778926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7754e74e0a5c0f499a1b07bd19fdf18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comment: 
+  Tags:
+    Tags: []
+  lastModifiedBy: Ludogram
+  lastModifiedDate: 11/04/2024 17:21:44
+  IsEditorPreview: 0
+  isHeader: 0
+  overrideHierarchyStyle: 0
+  hierarchyStyle:
+    Icon: {fileID: 0}
+    IconColor: {r: 1, g: 1, b: 1, a: 1}
+    UseIconColor: 0
+    LabelColor: {r: 1, g: 1, b: 1, a: 1}
+    UseLabelColor: 0
+    Background:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    UseBackground: 0
+    HeaderColor: {r: 1, g: 1, b: 1, a: 1}
+    UseHeaderColor: 0
+    HeaderBackground:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    OverrideHeaderBackground: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5564f499341508a43819ce17743cd92b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _childPrefab: {fileID: 11400000, guid: 2818e3b45f5f27741a4d11519391186f, type: 3}
+  _childAmount: 90
+  _slowSpawn: 0
+  _spawnSphere: 5
+  _spawnSphereHeight: 5
+  _spawnSphereDepth: 5
+  _minSpeed: 3
+  _maxSpeed: 5
+  _minScale: 0.7
+  _maxScale: 0.5
+  _soarFrequency: 0.42
+  _soarAnimation: PigeonSoar
+  _flapAnimation: PigeonFlap
+  _idleAnimation: PigeonIdle
+  _diveValue: 7
+  _diveFrequency: 0
+  _minDamping: 0.45
+  _maxDamping: 0.65
+  _waypointDistance: 4.32
+  _minAnimationSpeed: 2
+  _maxAnimationSpeed: 1.83
+  _randomPositionTimer: 5
+  _positionSphere: 20
+  _positionSphereHeight: 13
+  _positionSphereDepth: 20
+  _childTriggerPos: 1
+  _forceChildWaypoints: 1
+  _forcedRandomDelay: 10
+  _flatFly: 1
+  _flatSoar: 1
+  _birdAvoid: 1
+  _birdAvoidHorizontalForce: 500
+  _birdAvoidDown: 1
+  _birdAvoidUp: 1
+  _birdAvoidVerticalForce: 100
+  _birdAvoidDistanceMax: 4
+  _birdAvoidDistanceMin: 1.8333333
+  _soarMaxTime: 1
+  _avoidanceMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  _roamers: []
+  _posBuffer: {x: 0, y: 10.8921585, z: 0}
+  _skipFrame: 0
+  _updateDivisor: 2
+  _newDelta: 0
+  _updateCounter: 0
+  _activeChildren: 0
+  _groupChildToNewTransform: 0
+  _groupTransform: {fileID: 0}
+  _groupName: 
+  _groupChildToFlock: 1
+  _startPosOffset: {x: 0, y: 0, z: 0}
+  _thisT: {fileID: 400000}
+  LimitPitchRotation: 1
+  _childCountCache: 0

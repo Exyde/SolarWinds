@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1345053882420270
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4111535297448650}
+  - component: {fileID: 114052725220364538}
+  m_Layer: 0
+  m_Name: PigeonIdle Snap Baked Animation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4111535297448650
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345053882420270}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114052725220364538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345053882420270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 229169b80e09fa146b34df02da261955, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshes:
+  - {fileID: 4300000, guid: 2d2961e9d44da214eb8ec8aab9f48ac1, type: 2}
+  - {fileID: 4300000, guid: db0f96b426fd90d4b8af37cd4f9fad9c, type: 2}
+  - {fileID: 4300000, guid: 2636a8258b1e2c044a3720eebc583be9, type: 2}
+  - {fileID: 4300000, guid: cd881e469f6a1794f81806f4f5b6d290, type: 2}
+  - {fileID: 4300000, guid: 9fb0ccb2b72f16f4c8ae784b0d39e98e, type: 2}
+  - {fileID: 4300000, guid: 300e694984175aa44bff830fa02fa05b, type: 2}
+  - {fileID: 4300000, guid: 700bdf9ab505f9e418ccf809b87e1ca8, type: 2}
+  - {fileID: 4300000, guid: 4163fd29b14c4014bb95037f0c6e6eaf, type: 2}
+  - {fileID: 4300000, guid: 9ffa3e66fde619d418475bee3e023ecc, type: 2}
+  - {fileID: 4300000, guid: 72ab9a4b3a892094cb55ac25d139fc12, type: 2}
+  - {fileID: 4300000, guid: 5d279fc406b105f4783e49452f77295a, type: 2}
+  - {fileID: 4300000, guid: 6fcddea29c43e7b46a62421895f39d23, type: 2}
+  - {fileID: 4300000, guid: 476fc3dafd6f743449a0c766c9dbbc62, type: 2}
+  - {fileID: 4300000, guid: 2dbd293caba7a4a4c9b207528dfa8f41, type: 2}
+  - {fileID: 4300000, guid: c2d62dfadc34dae458d529ed61e932ae, type: 2}
+  - {fileID: 4300000, guid: 70fd74d828ef09043a2449d7a27cd5c8, type: 2}
+  - {fileID: 4300000, guid: f68bddbc87ec2ee4f8625a9fd7d0059a, type: 2}
+  - {fileID: 4300000, guid: 39607c2ea50e71a4fb5435e7c5b1d521, type: 2}
+  - {fileID: 4300000, guid: cbaa2aaadd51963419a3d6e72849b888, type: 2}
+  - {fileID: 4300000, guid: 2df327a407357e541a1c9685509c6e65, type: 2}
+  - {fileID: 4300000, guid: 4c5564455a29c4d409cca4c2e90b86d6, type: 2}
+  - {fileID: 4300000, guid: 00c24bff269db17459fab66e3df75cdb, type: 2}
+  - {fileID: 4300000, guid: 22b0244d595c1724ca2959fa6b554fd6, type: 2}
+  - {fileID: 4300000, guid: bde6e0232feb5ab44a8e533e43c6aefa, type: 2}
+  - {fileID: 4300000, guid: 5a3c9e2668823cf4ca17df6c2e23c5c2, type: 2}
+  - {fileID: 4300000, guid: 726e1084b3382264e86dadec78995cd9, type: 2}
+  - {fileID: 4300000, guid: fd8a0e2fcfd9b34459369e76c847d944, type: 2}
+  - {fileID: 4300000, guid: 0c1173b366913364c9b93a5c23719b90, type: 2}
+  - {fileID: 4300000, guid: 11657f3f9f0870c478bcb39aabbddf97, type: 2}
+  - {fileID: 4300000, guid: 7c2b03d2a556ce8439e2096f2ead2868, type: 2}
+  - {fileID: 4300000, guid: bf77c839cf1c1a347aaa87b7b3278e43, type: 2}
+  - {fileID: 4300000, guid: 178537f1f07508c4b87154ae71372111, type: 2}
+  - {fileID: 4300000, guid: 978e60d70dcff8f47b27ad0534e02614, type: 2}
+  - {fileID: 4300000, guid: 9ea2982710481794983980fd4af19b8f, type: 2}
+  - {fileID: 4300000, guid: 34e34c76b09d30b43b2ca2a9c5d9b3a5, type: 2}
+  - {fileID: 4300000, guid: 7afef790744a497468cf09943d63a26f, type: 2}
+  - {fileID: 4300000, guid: 5b4988d1c79974a49b79072efc6df027, type: 2}
+  - {fileID: 4300000, guid: 061c4823d6ef4d0488f2cdf124f805da, type: 2}
+  - {fileID: 4300000, guid: c6ab4369252cacf49b8203fc6ecb6be1, type: 2}
+  - {fileID: 4300000, guid: 29132e3b3db9e3b45ae1ee53a178d94e, type: 2}
+  - {fileID: 4300000, guid: 1973f5d85dbb3544582061106eb6dfbf, type: 2}
+  - {fileID: 4300000, guid: ece448139edc33f4e91a2405288c7554, type: 2}
+  - {fileID: 4300000, guid: 2fb1c09f88ee38e41a463f14bf2af246, type: 2}
+  - {fileID: 4300000, guid: 049865881f1dcc84581f25e791ccbe04, type: 2}
+  - {fileID: 4300000, guid: 1c3674c8a9682c3488ed6800b9924977, type: 2}
+  - {fileID: 4300000, guid: 09860541c0feb7f4cb5f93a769d95467, type: 2}
+  - {fileID: 4300000, guid: 9394143bb8c6f364f837dfe224c4de01, type: 2}
+  - {fileID: 4300000, guid: 0333b30846ac0154e929ea8e975b0c99, type: 2}
+  - {fileID: 4300000, guid: 0fb9761cb6185ba4698ec68de6585678, type: 2}
+  - {fileID: 4300000, guid: 66d015a83c649cf4eab64460bb2909b2, type: 2}
+  - {fileID: 4300000, guid: 8e7a841cde2bb9a4c9bdf427919a9641, type: 2}
+  - {fileID: 4300000, guid: 3f82bed7cd0d6874b85d01393d42f630, type: 2}
+  - {fileID: 4300000, guid: e317eaeb405bf514b8168f136a7a6923, type: 2}
+  - {fileID: 4300000, guid: 2fae781c565acb64ba372fb4823cc29d, type: 2}
+  - {fileID: 4300000, guid: 84132147a6a160d4fa2678fd4707e237, type: 2}
+  - {fileID: 4300000, guid: 1641744c4f2b3ee46ad0ed1108017b04, type: 2}
+  - {fileID: 4300000, guid: 10c1dd079193062429ae913b79c38e78, type: 2}
+  - {fileID: 4300000, guid: c06d2b1716e4a1540b9f56d17d3926db, type: 2}
+  - {fileID: 4300000, guid: 99e195868a1185f479b6724711a8bf3f, type: 2}
+  - {fileID: 4300000, guid: 79539227042b1d34da5955a5fe238d04, type: 2}
+  playSpeed: 20
+  rendererComponent: {fileID: 0}
+  randomStartFrame: 1
+  loop: 1
+  pingPong: 0
+  playOnAwake: 1
+  transformCache: {fileID: 0}
+  transitionFrame: 0
+  crossfadeFrame: 0
