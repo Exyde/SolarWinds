@@ -27,6 +27,7 @@ J'aime beaucoup le flow scriptable settings (datas), class C# pure avec injectio
 	- Observable : wip
 	- Get a better structure like in MC or Aria maybe
 	- Impletement the kindof actions system from lucas for entity : talk
+	- Add the Outlines.cs Tool
 
 ## Code Structure Notes - Engine
 
