@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 400000}
   - component: {fileID: 1434504691207358987}
   - component: {fileID: 11400000}
-  m_Layer: 8
+  - component: {fileID: 374292261817921507}
+  - component: {fileID: 4036318457775585187}
+  m_Layer: 6
   m_Name: Pigeon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,7 +52,7 @@ MonoBehaviour:
   Tags:
     Tags: []
   lastModifiedBy: Ludogram
-  lastModifiedDate: 12/04/2024 17:04:43
+  lastModifiedDate: 12/04/2024 17:52:50
   IsEditorPreview: 0
   isHeader: 0
   overrideHierarchyStyle: 0
@@ -159,6 +161,37 @@ MonoBehaviour:
   currentAnim: 
   _closeToSpot: 0
   _landingOffsetFix: {x: 0, y: 0.1, z: 0}
+--- !u!135 &374292261817921507
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0.25}
+--- !u!114 &4036318457775585187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85ec76a0cdb84bcea4bb127cd1d27966, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _entityData: {fileID: 0}
+  _currentLifetime: 0
+  _timer:
+    _elapsedTime: 0
+    _enabled: 0
+    _isOneShot: 0
 --- !u!1 &100002
 GameObject:
   m_ObjectHideFlags: 0
