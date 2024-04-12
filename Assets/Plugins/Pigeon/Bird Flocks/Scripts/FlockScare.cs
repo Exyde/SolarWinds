@@ -1,7 +1,7 @@
 ﻿// Attach to a player or camera to scare away birds from their landingspots.
 using UnityEngine;
 using System.Collections;
-public class FlockScare :MonoBehaviour
+public class FlockScare : MonoBehaviour
 {
 	public LandingSpotController[] landingSpotControllers;		//List of landingspot controllers containing landingspots to scare
 	public float scareInterval = 0.1f;							//How often to check the next spot if it is close enough to scare (Every Nth second)
@@ -22,7 +22,7 @@ public class FlockScare :MonoBehaviour
 		{
 			landingSpotControllers[lsc].ScareAll();
 		}
-		Invoke("CheckProximityToLandingSpots", scareInterval);
+		Invoke(nameof(CheckProximityToLandingSpots), scareInterval);
 	}
 	//Counts trough all the landingspots inside all the controllers (For performance this is not done in a for loop)
 	void IterateLandingSpots()
@@ -56,19 +56,18 @@ public class FlockScare :MonoBehaviour
 		}
 		return false;
 	}
-	//Creates multiple instances of the Invoke that checks distance to landingspots
-	void Invoker()
+	private void Invoker()
 	{
-		for (int i = 0; i < InvokeAmounts; i++)
+		for (var i = 0; i < InvokeAmounts; i++)
 		{
-			float s = (scareInterval / InvokeAmounts) * i;
-			Invoke("CheckProximityToLandingSpots", scareInterval + s);
+			var s = (scareInterval / InvokeAmounts) * i;
+			Invoke(nameof(CheckProximityToLandingSpots), scareInterval + s);
 		}
 	}
-	//Starts checking for birds to scare when component is enabled
-	void OnEnable()
+
+	private void OnEnable()
 	{
-		CancelInvoke("CheckProximityToLandingSpots");
+		CancelInvoke(nameof(CheckProximityToLandingSpots));
 		if (landingSpotControllers.Length > 0)
 			Invoker();
 #if UNITY_EDITOR
@@ -76,14 +75,12 @@ public class FlockScare :MonoBehaviour
 			Debug.Log("Please assign LandingSpotControllers to FlockScare");
 #endif
 	}
-	//Stops checking for birds to scare when component is disabled
-	void OnDisable()
+	private void OnDisable()
 	{
-		CancelInvoke("CheckProximityToLandingSpots");
+		CancelInvoke(nameof(CheckProximityToLandingSpots));
 	}
 #if UNITY_EDITOR
-	//Shows area of scaryness (Only used in editor)
-	void OnDrawGizmos()
+	private void OnDrawGizmos()
 	{
 		Gizmos.color = Color.red;
 		Gizmos.DrawWireSphere(transform.position, distanceToScare);

@@ -1,8 +1,6 @@
 
-///	Copyright Unluck Software /// www.chemicalbliss.com																															
-
 using UnityEngine;
-public class FlockChild :MonoBehaviour
+public class FlockChild : MonoBehaviour
 {
 	[HideInInspector]
 	public FlockController _spawner;        //Reference to the flock controller that spawned this bird
@@ -36,7 +34,7 @@ public class FlockChild :MonoBehaviour
 	public float _avoidDistance;            //How far from an obstacle this can be before starting to avoid it
 	float _soarTimer;
 	bool _instantiated;
-	static int _updateNextSeed = 0;
+	private static int _updateNextSeed;
 	int _updateSeed = -1;
 	[HideInInspector]
 	public bool _avoid = true;
@@ -132,7 +130,7 @@ public class FlockChild :MonoBehaviour
 					//_avoid = true;
 				} else
 				{
-					_wayPoint = _landingSpot._t.position + _landingPosOffset + (_landingOffsetFix * _thisT.localScale.y);
+					_wayPoint = _landingSpot.Transform.position + _landingPosOffset + (_landingOffsetFix * _thisT.localScale.y);
 				//	_avoid = false;
 				}
 				_damping = _landingSpot._controller._landingTurnSpeedModifier;
@@ -164,7 +162,7 @@ public class FlockChild :MonoBehaviour
 			currentAnim = "Flap";
 		}
 		//Start landing if distance is close enough
-		if (distance < 8f && distance >= 1f)
+		if (distance is < 8f and >= 1f)
 		{
 			if (_landingSpot._controller._soarLand)
 			{
@@ -236,19 +234,22 @@ public class FlockChild :MonoBehaviour
 
 	public Vector3 GetLandingSpotPosition()
 	{
-		return _landingSpot._t.position + _landingPosOffset + _landingOffsetFix * _thisT.localScale.y;
+		return _landingSpot.Transform.position + _landingPosOffset + _landingOffsetFix * _thisT.localScale.y;
 	}
 	
-	public void RotateBird()
+	private void RotateBird()
 	{
-		if (!_landingSpot._controller._rotateAfterLanding || _thisT.rotation.eulerAngles == _landingSpot._t.rotation.eulerAngles) return;
+		var eulerAngles = _landingSpot.Transform.rotation.eulerAngles;
+		if (!_landingSpot._controller._rotateAfterLanding || _thisT.rotation.eulerAngles == eulerAngles) return;
 		Quaternion rot = _landingSpot._landingChild._thisT.rotation;
 		Vector3 rotE = rot.eulerAngles;
-		rotE.x = Mathf.LerpAngle(_thisT.rotation.eulerAngles.x, _landingSpot._t.rotation.eulerAngles.x, _landingSpot._controller._landedRotateSpeed * _spawner._newDelta);
-		rotE.z = Mathf.LerpAngle(_thisT.rotation.eulerAngles.z, _landingSpot._t.rotation.eulerAngles.z, _landingSpot._controller._landedRotateSpeed * _spawner._newDelta);
-		rotE.y = Mathf.LerpAngle(_thisT.rotation.eulerAngles.y, _landingSpot._t.rotation.eulerAngles.y, _landingSpot._controller._landedRotateSpeed * _spawner._newDelta);
+		var rotation = _thisT.rotation;
+		rotE.x = Mathf.LerpAngle(rotation.eulerAngles.x, eulerAngles.x, _landingSpot._controller._landedRotateSpeed * _spawner._newDelta);
+		rotE.z = Mathf.LerpAngle(rotation.eulerAngles.z, eulerAngles.z, _landingSpot._controller._landedRotateSpeed * _spawner._newDelta);
+		rotE.y = Mathf.LerpAngle(rotation.eulerAngles.y, eulerAngles.y, _landingSpot._controller._landedRotateSpeed * _spawner._newDelta);
 		rot.eulerAngles = rotE;
-		_thisT.rotation = rot;
+		rotation = rot;
+		_thisT.rotation = rotation;
 	}
 	
 	public void OnDisable()
@@ -260,28 +261,15 @@ public class FlockChild :MonoBehaviour
 	
 	public void OnEnable()
 	{
-		if (_instantiated)
+		if (!_instantiated) return;
+		_spawner._activeChildren++;
+		if (_animationIsBaked)
 		{
-			_spawner._activeChildren++;
-			if (_animationIsBaked)
-			{
-				if (_landing)
-				{
-					_bakedAnimator.SetAnimation(2);
-				} else
-				{
-					_bakedAnimator.SetAnimation(0);
-				}
-				return;
-			}
-			if (_landing)
-			{
-				_modelAnimation.Play(_spawner._idleAnimation);
-			} else
-			{
-				_modelAnimation.Play(_spawner._flapAnimation);
-			}
+			_bakedAnimator.SetAnimation(_landing ? 2 : 0);
+			return;
 		}
+
+		_modelAnimation.Play(_landing ? _spawner._idleAnimation : _spawner._flapAnimation);
 	}
 	
 	public void FindRequiredComponents()
@@ -296,8 +284,8 @@ public class FlockChild :MonoBehaviour
 		if (!_modelAnimation && !_animator) _animationIsBaked = true;
 		else _animationIsBaked = false;
 	}
-	
-	public void RandomizeStartAnimationFrame()
+
+	private void RandomizeStartAnimationFrame()
 	{
 		if (_animationIsBaked || _animator) return;
 		foreach (AnimationState state in _modelAnimation)
@@ -305,8 +293,8 @@ public class FlockChild :MonoBehaviour
 			state.time = Random.value * state.length;
 		}
 	}
-	
-	public void InitAvoidanceValues()
+
+	private void InitAvoidanceValues()
 	{
 		_avoidValue = Random.Range(.3f, .1f);
 		if (_spawner._birdAvoidDistanceMax != _spawner._birdAvoidDistanceMin)
@@ -316,47 +304,35 @@ public class FlockChild :MonoBehaviour
 		}
 		_avoidDistance = _spawner._birdAvoidDistanceMin;
 	}
-	
-	public void SetRandomScale()
+
+	private void SetRandomScale()
 	{
 		float sc = Random.Range(_spawner._minScale, _spawner._maxScale);
 		_thisT.localScale = new Vector3(sc, sc, sc);
 	}
-	//Soar Timeout - Limits how long a bird can soar
-	public void SoarTimeLimit()
+
+	private void SoarTimeLimit()
 	{
-		if (this._soar && _spawner._soarMaxTime > 0)
+		if (!_soar || !(_spawner._soarMaxTime > 0)) return;
+		if (_soarTimer > _spawner._soarMaxTime)
 		{
-			if (_soarTimer > _spawner._soarMaxTime)
-			{
-				this.Flap();
-				_soarTimer = 0.0f;
-			} else
-			{
-				_soarTimer += _spawner._newDelta;
-			}
+			Flap();
+			_soarTimer = 0.0f;
+		} else
+		{
+			_soarTimer += _spawner._newDelta;
 		}
 	}
 	
-	public void CheckForDistanceToWaypoint()
+	private void CheckForDistanceToWaypoint()
 	{
-		//*	frames++;
-		//	if (frames % 60 != 0) return;
-		if (!_landing && (_thisT.position - _wayPoint).magnitude < _spawner._waypointDistance)// + _stuckCounter)
+		if (!_landing && (_thisT.position - _wayPoint).magnitude < _spawner._waypointDistance)
 		{
 			Wander();
-			//_stuckCounter = 0.0f;
 		}
-		//else if (!_landing)
-		//{
-		//	//_stuckCounter += _spawner._newDelta;
-		//} else
-		//{
-		////	_stuckCounter = 0.0f;
-		//}
 	}
 	
-	public void RotationBasedOnWaypointOrAvoidance()
+	private void RotationBasedOnWaypointOrAvoidance()
 	{
 		if (_avoiding)
 		{
@@ -383,23 +359,19 @@ public class FlockChild :MonoBehaviour
 		if (_move)
 		{
 			ChangeSpeed();
-			if (!_closeToSpot) _thisT.position += _thisT.forward * _speed * _spawner._newDelta;
+			if (!_closeToSpot) _thisT.position += _thisT.forward * (_speed * _spawner._newDelta);
 			if (Avoidance() && !_avoiding)
 			{
 				_avoiding = true;
-				Invoke("AvoidNoLonger", Random.Range(.25f, .5f));
+				Invoke(nameof(AvoidNoLonger), Random.Range(.25f, .5f));
 			}
 		}
 	}
 
-	void AvoidNoLonger()
-	{
-		_avoiding = false;
-	}
-		
+	void AvoidNoLonger() => _avoiding = false;
+
 	void ChangeSpeed()
 	{
-		//	_speed = Mathf.Lerp(_speed, _targetSpeed, _spawner._newDelta * 2.5f);
 		if (_speed < _targetSpeed)
 			_speed += _acceleration * _spawner._newDelta;
 		else if (_speed > _targetSpeed)
@@ -628,18 +600,3 @@ public class FlockChild :MonoBehaviour
 		}
 	}
 }
-//void MoveAwayFromOthers()
-//{
-//	Vector3 dis;
-//	for (int i = 0; i < _spawner._roamers.Count; i++)
-//	{
-//		if (_spawner._roamers[i] == this) continue;
-//		dis =  _thisT.position - _spawner._roamers[i]._thisT.position;
-//		//Debug.Log(dis.magnitude);
-//		if (dis.sqrMagnitude < .3f)
-//		{
-//			_thisT.position = _thisT.position + (dis.normalized * .02f);
-//		}
-//	}
-//	Invoke("MoveAwayFromOthers", .01f*Random.Range(1, 1.5f));
-//}
