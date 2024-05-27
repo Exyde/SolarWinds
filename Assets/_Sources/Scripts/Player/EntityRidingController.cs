@@ -1,11 +1,8 @@
-﻿using System;
-using Systems.Entities;
+﻿using _Sources.Scripts.EntitySystem;
 using UnityEngine;
 
 namespace _Sources.Scripts.Player
 {
-    
-    //Utiliser une interface IRidable ?
     public class EntityRidingController : MonoBehaviour
     {
 
@@ -13,7 +10,7 @@ namespace _Sources.Scripts.Player
         [SerializeField] private float detectionRadius = 1f;
         [SerializeField] private LayerMask entityLayer;
 
-        [SerializeField] private Transform attachedEntity;
+        [SerializeField] private IRidable attachedEntity;
         private void Update()
         {
             if (Input.GetKey(KeyCode.X))
@@ -26,7 +23,7 @@ namespace _Sources.Scripts.Player
         {
             if (attachedEntity != null)
             {
-                transform.position = attachedEntity.position;
+                transform.position = attachedEntity.AnchorPoint;
             }
         }
 
@@ -53,18 +50,17 @@ namespace _Sources.Scripts.Player
             {
                 foreach (var coll in colliders )
                 {
-                    if (!coll.TryGetComponent(out Entity entity)) continue;
-                    AttachTo(entity);
+                    if (!coll.TryGetComponent(out IRidable ridable)) continue;
+                    AttachTo(ridable);
                     break;
                 }
             }
         }
 
-        private void AttachTo(Entity entity)
+        private void AttachTo(IRidable ridable)
         {
-            //Todo : Implement holder interface
             isRiding = true;
-            attachedEntity = entity.transform;
+            attachedEntity = ridable;
         }
     }
 }

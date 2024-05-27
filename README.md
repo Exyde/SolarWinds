@@ -50,33 +50,4 @@ J'aime beaucoup le flow scriptable settings (datas), class C# pure avec injectio
 - Meshes : ok
 
 
-___ 
-
-
-
-# Git Study
-# Part 1 - Introduction
-- You can commit on your local DT, and that's great.
-- Everything has integrity at the lowest level with SHA-1 Hash.
-- Three core states
-	- modified : changed filed but not commited
-	- staged : marked to go to the next commit
-	- commited : safely stored in local database
-- Working tree/directory : a single checkout : files pulled out from the compressed database in the git directory
-- staged area : a file, generally in the git dir, also know as the index. Stores infos about what will be commited next 
-- .git directory : most important part. stores metadata and object database of the project. This is what is copied when you clone
-
-# Part 2 - Git Basics
-
-## Commands Lists (To be gitted)
-git config --list --show-origin 		// All of your settings and where are they coming from.
-git config --global user.name "Sly"		//Settings the global username. you can override it per project. same with user.email
-//You can configure almost anything in the config I guess like pull.rebase "true"
-git config --global init.defaultBranch main 			//Change the default branch name from master to main
-git config user.name				// read a specific key
-git help config 					//open doc offline
-git config -h 						//terminal help
-git clone url optinnal repo name 	//you can specifiy the repo name !
-## Framework Questions
-- Logger as dll ? How ?
 

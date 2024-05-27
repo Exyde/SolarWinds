@@ -1,7 +1,9 @@
-
+using _Sources.Scripts.EntitySystem;
 using UnityEngine;
-public class FlockChild : MonoBehaviour
+public class FlockChild : MonoBehaviour, IRidable
 {
+	public Vector3 AnchorPoint => transform.position + (Vector3.up * 0.5f);
+	
 	[HideInInspector]
 	public FlockController _spawner;        //Reference to the flock controller that spawned this bird
 	[HideInInspector]
@@ -599,4 +601,5 @@ public class FlockChild : MonoBehaviour
 			}
 		}
 	}
+
 }
