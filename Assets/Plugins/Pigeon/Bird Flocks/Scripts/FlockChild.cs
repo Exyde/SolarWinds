@@ -1,6 +1,5 @@
-using _Sources.Scripts.EntitySystem;
 using UnityEngine;
-public class FlockChild : MonoBehaviour, IRidable
+public class FlockChild : MonoBehaviour
 {
 	public Vector3 AnchorPoint => transform.position + (Vector3.up * 0.5f);
 	
