@@ -39,7 +39,7 @@ public class LandingSpotController : MonoBehaviour
 		if (_transformCache == null) _transformCache = transform;
 		if (_flock == null) {
 			_flock = (FlockController)FindObjectOfType(typeof(FlockController));
-			Debug.Log(this + " has no assigned FlockController, a random FlockController has been assigned");
+//			Debug.Log(this + " has no assigned FlockController, a random FlockController has been assigned");
 		}
 
 		spots = new List<LandingSpot>();

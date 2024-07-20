@@ -27,7 +27,8 @@ namespace Systems.Entities
         [SerializeField] private TerrainSurface _terrain;
         
         [SerializeField] private List<EntityData> _entityDatas;
-
+        [SerializeField] private Transform _entityHolder;
+        
         [Header("Debug")]
         [SerializeField] private List<Entity> _debugRegisteredEntities = new();
         
@@ -66,7 +67,7 @@ namespace Systems.Entities
         {
             Vector3 spawnPos = data.RandomizeSpawnPos ? position.RandomPosInSphere(data.RandomSpawnOffset) : position;
             
-            GameObject go = Instantiate(data.Prefab, spawnPos, Quaternion.identity, parent ? parent : transform);
+            GameObject go = Instantiate(data.Prefab, spawnPos, Quaternion.identity, parent ? parent : _entityHolder);
             Entity entity = go.GetComponent<Entity>();
             entity.Init();
         }

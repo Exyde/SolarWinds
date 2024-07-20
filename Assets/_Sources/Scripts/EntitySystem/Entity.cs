@@ -20,7 +20,7 @@ namespace Systems.Entities
         #region IEntity
         public virtual void Birth()
         {
-            Engine.Core.Instance.Logger.Log($"[Entity] : {_entityData.Name} is born !");
+            //Engine.Core.Instance.Logger.Log($"[Entity] : {_entityData.Name} is born !");
             gameObject.name = _entityData.Name;
 
             _timer = new Vibrant.Core.Timer();
@@ -52,7 +52,7 @@ namespace Systems.Entities
 
         public virtual void Die()
         {
-            Engine.Core.Instance.Logger.Log(($"[Entity] : {_entityData.Name} is dead !"));
+//            Engine.Core.Instance.Logger.Log(($"[Entity] : {_entityData.Name} is dead !"));
 
             _timer.Kill();
 

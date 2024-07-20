@@ -200,7 +200,7 @@ public class LandingSpot : MonoBehaviour
 			Gizmos.color = Color.blue;
 			Gizmos.DrawCube(Transform.position + _preLandWaypoint, Vector3.one * _controller._gizmoSize * .25f);
 		}
-		if (Transform.parent.GetChild(0) != Transform) return;
+		if (Transform.parent != null && Transform.parent.GetChild(0) != Transform) return;
 		Gizmos.color = new Color(1.0f, 1.0f, 0.0f, 1f);
 		var position1 = Transform.position;
 		Gizmos.DrawWireSphere(position1, _controller._maxBirdDistance);

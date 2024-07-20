@@ -1,3 +1,4 @@
+using Engine.CitationPlugin;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -58,6 +59,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButton("Jump"))
         {
             _moveDirection.y = _jumpSpeed;
+            CitationSystem.Instance.DisplayCitation();
         }
         else
         {
