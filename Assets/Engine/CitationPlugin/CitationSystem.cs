@@ -1,24 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using Random = UnityEngine.Random;
+using UnityEngine.Serialization;
 
 namespace Engine.CitationPlugin
 {
     public class CitationSystem : MonoBehaviour
     {
-        [Header("Settings")] [SerializeField] private bool _displayRandomCitation;
-        [SerializeField] private List<CitationData> _citations;
-        
+        public static CitationSystem Instance;
+
+        [FormerlySerializedAs("_displayRandomCitation")] [Header("Settings")] [SerializeField] private bool _displayRandomCitationAtStart;
+        [SerializeField] private float _inDisplayDuration;
+        [SerializeField] private float _outDisplayDuration;
         [Header("References")]
         [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private TMP_Text _author;
         [SerializeField] private TMP_Text _citation;
+        
+        private Sequence _citationSequence;
 
-        private HashSet<CitationData> _displayedCitations = new HashSet<CitationData>(); //or something else like a dict count or bias
-        public static CitationSystem Instance;
         
         private void Awake()
         {
@@ -29,35 +30,35 @@ namespace Engine.CitationPlugin
             }
             else
             {
-                Destroy(this.gameObject);
+                Destroy(gameObject);
             }
         }
 
         private void Start()
         {
-            _citations = CitationBank.LoadAll();
-            Debug.Log($"Loaded {_citations.Count} citations.");
+            CitationBank.LoadAll();
             
-            DisplayCitation();
+            if (_displayRandomCitationAtStart) DisplayRandomCitation(_inDisplayDuration, _outDisplayDuration);
         }
         
-
-        public void DisplayCitation()
+        public void DisplayRandomCitation() => DisplayRandomCitation(_inDisplayDuration, _outDisplayDuration);
+        private void DisplayRandomCitation( float inDuration, float outDuration)
         {
-            Hide(0);
+            _citationSequence?.Kill(false);
             
-            CitationData citationData = _citations[Random.Range(0, _citations.Count)];
+            Hide(0);
+
+            CitationData citationData = CitationBank.GetRandomCitation();
             _author.text = citationData.Author;
             _citation.text = citationData.Citation;
 
-            Sequence citationSequence = DOTween.Sequence();
 
-            citationSequence.Append(_canvasGroup.DOFade(1, 1));
-            citationSequence.AppendInterval(2.5f);
-            citationSequence.AppendCallback(() => Hide(1f));
+            _citationSequence.Append(_canvasGroup.DOFade(1, inDuration));
+            _citationSequence.AppendInterval(2.5f);
+            _citationSequence.AppendCallback(() => Hide(outDuration));
         }
 
-        public void Hide(float duration = 0)
+        private void Hide(float duration = 0)
         {
             _canvasGroup.DOFade(0, duration);
         }

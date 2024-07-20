@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButton("Jump"))
         {
             _moveDirection.y = _jumpSpeed;
-            CitationSystem.Instance.DisplayCitation();
+            CitationSystem.Instance.DisplayRandomCitation();
         }
         else
         {
