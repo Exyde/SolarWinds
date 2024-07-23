@@ -7,9 +7,7 @@ namespace Engine.CitationPlugin
     public static class CitationBank
     {
         private static List<CitationData> _citations = new();
-        private static HashSet<CitationData> _displayedCitations = new();
-
-        
+        private static readonly HashSet<CitationData> DisplayedCitations = new();
         
         public static bool LoadAll()
         {
@@ -26,9 +24,9 @@ namespace Engine.CitationPlugin
         
         public static CitationData GetRandomCitation()
         {
-            if (_displayedCitations.Count == _citations.Count)
+            if (DisplayedCitations.Count == _citations.Count)
             {
-                _displayedCitations.Clear();
+                DisplayedCitations.Clear();
             }
             
             var pickedCitation =  _citations[Random.Range(0, _citations.Count)];
@@ -36,7 +34,7 @@ namespace Engine.CitationPlugin
             int i = 0;
             int maxIterations = 100;
             
-            while (!_displayedCitations.Add(pickedCitation) && i < maxIterations)
+            while (!DisplayedCitations.Add(pickedCitation) && i < maxIterations)
             {
                 pickedCitation = _citations[Random.Range(0, _citations.Count)];
                 i++;
