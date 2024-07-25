@@ -1,3 +1,4 @@
+using System;
 using Engine.CitationPlugin;
 using UnityEngine;
 
@@ -27,6 +28,8 @@ public class PlayerController : MonoBehaviour
    
     public void TogglePlayerMovement(bool state) => _canMove = state;
     public void TogglePlayerCameraMovement(bool state) => _canMoveCamera = state;
+
+    public static Action OnJump;
 
     #region Unity Callbacks
     void Start()
@@ -59,7 +62,8 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButton("Jump"))
         {
             _moveDirection.y = _jumpSpeed;
-            CitationSystem.Instance.DisplayRandomCitation();
+            
+            OnJump?.Invoke();
         }
         else
         {
