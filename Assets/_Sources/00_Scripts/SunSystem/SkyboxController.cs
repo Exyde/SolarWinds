@@ -1,13 +1,27 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using ExydeToolbox;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [System.Serializable]
 public class SkyboxController
 {
-    [SerializeField][Range(.5f, 30)] public float _timeToLerp;
+
+    [System.Serializable]
+    public struct SunStateSettingsPair
+    {
+        public SunState _sunState;
+        public SkyboxSettings _skyboxSettings;
+    }
+
+    [SerializeField] [Range(.5f, 30)] public float _timeToLerp;
     [SerializeField] public SkyboxSettings _skyboxSettingsA;
     [SerializeField] public SkyboxSettings _skyboxSettingsB;
+
+    [SerializeField] public List<SunStateSettingsPair> _sunStateSettings;
+
     private static readonly int CloudTexture = Shader.PropertyToID("_Cloud_Texture");
     private static readonly int SkyColor = Shader.PropertyToID("_SkyColor");
     private static readonly int HorizonColor = Shader.PropertyToID("_HorizonColor");
@@ -21,20 +35,22 @@ public class SkyboxController
     private static readonly int SunMaskSize = Shader.PropertyToID("_Sun_Mask_Size");
 
     //Todo : Dict <Sunstate,SkyboxSettings>
-    
-    //Todo : doTween version ?
-    public IEnumerator LerpSkyboxSettings(SkyboxSettings A, SkyboxSettings B, float timeToLerp){
+
+    //Todo : doTween version ? -- Lerp Directly from Material in Settings instead of members 
+    public IEnumerator LerpSkyboxSettings(SkyboxSettings A, SkyboxSettings B, float timeToLerp)
+    {
 
         float elapsedTime = 0;
 
         Material skybox = RenderSettings.skybox;
         skybox.SetTexture(CloudTexture, B._cloudTexture);
-        
-        while (elapsedTime < timeToLerp){
-            
+
+        while (elapsedTime < timeToLerp)
+        {
+
             float t = elapsedTime / timeToLerp;
             //skybox.Lerp(matA, matB, t);
-            
+
             //Sky
             skybox.SetColor(SkyColor, Color.Lerp(A._skyColor, B._skyColor, t));
             skybox.SetColor(HorizonColor, Color.Lerp(A._horizonColor, B._horizonColor, t));
@@ -52,10 +68,16 @@ public class SkyboxController
             skybox.SetColor(SunColor, Color.Lerp(A._sunColor, B._sunColor, t));
             skybox.SetFloat(SunSize, Mathf.Lerp(A._sunSize, B._sunSize, t));
             skybox.SetFloat(SunMaskSize, Mathf.Lerp(A._sunMaskSize, B._sunMaskSize, t));
-            
+
             elapsedTime += Time.deltaTime;
             //RenderSettings.skybox = skybox;
             yield return null;
         }
+    }
+
+    public void SetSunState(SunState sunState)
+    {
+        SunStateSettingsPair settings = _sunStateSettings.FirstOrDefault(x => x._sunState == sunState);
+        RenderSettings.skybox.Lerp(settings._skyboxSettings.Material, settings._skyboxSettings.Material, 1);
     }
 }

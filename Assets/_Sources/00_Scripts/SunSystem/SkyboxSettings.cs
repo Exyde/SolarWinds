@@ -6,6 +6,10 @@ namespace ExydeToolbox
     public class SkyboxSettings : ScriptableObject
     {
         [SerializeField] private SunState _sunState;
+        [SerializeField] private Material _skyboxMaterial;
+
+        public SunState SunState => _sunState;
+        public Material Material => _skyboxMaterial;
         
         [Header ("Sky")]
         [SerializeField] public Color _skyColor;

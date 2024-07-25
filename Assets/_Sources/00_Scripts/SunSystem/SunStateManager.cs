@@ -25,6 +25,12 @@ public class SunStateManager : MonoBehaviour
         SunState = SunState.Sunborn;
     }
 
+    public void SetSunState(SunState sunState)
+    {
+        _skyboxController.SetSunState(sunState);
+        SunState = sunState;
+    }
+
     private void OnEnable()
     {
         OnSunStateChanged += Log;
@@ -40,7 +46,6 @@ public class SunStateManager : MonoBehaviour
         Debug.Log($"[SunStateManager] : current SunState is {newSunState}");
     }
     
-    //Skybox Lerp - Need SkyboxConfig ?
     [ContextMenu("Lerp Skybox A->B")]
     public void LerpSkyboxSettingsContextMenuAB(){
         StartCoroutine(_skyboxController.LerpSkyboxSettings(_skyboxController._skyboxSettingsA, _skyboxController._skyboxSettingsB,  _skyboxController._timeToLerp));
