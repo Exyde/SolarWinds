@@ -15,6 +15,7 @@ public class MimicController : MonoBehaviour
 
     [SerializeField] private Transform _target = null;
     [SerializeField] private Vector3 _targetPos;
+    [SerializeField] private float _minDistanceToPlayer = 1f;
 
     [SerializeField] private float _timeToRefreshTargetPos = 2f;
     private float _timeSinceTargetRefresh = 0f;
@@ -84,7 +85,7 @@ public class MimicController : MonoBehaviour
     
     void MoveTowardsTarget()
     {
-        if (forceFollowPlayer && Vector3.Distance(transform.position, _targetPos) < .2f) return;
+        if (forceFollowPlayer && Vector3.Distance(transform.position, _targetPos) < _minDistanceToPlayer) return;
         
         var direction = (_targetPos - transform.position).normalized;            
 

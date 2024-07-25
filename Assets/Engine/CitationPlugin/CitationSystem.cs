@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using DG.Tweening;
+﻿using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -21,14 +19,12 @@ namespace Engine.CitationPlugin
         [SerializeField] private TMP_Text _citation;
         
         private Sequence _citationSequence;
-
         
         private void Awake()
         {
             if (Instance == null)
             {
                 Instance = this;
-                DontDestroyOnLoad(this);
             }
             else
             {
@@ -39,7 +35,6 @@ namespace Engine.CitationPlugin
         private void Start()
         {
             CitationBank.LoadAll();
-
             
             if (_displayRandomCitationAtStart) DisplayRandomCitation(_inDisplayDuration, _outDisplayDuration);
         }
@@ -52,24 +47,22 @@ namespace Engine.CitationPlugin
 
         private void OnDisable()
         {
-            //That make it not plugin anymore :[[[s
+            //That make it not plugin anymore :[[[
             if (_displayRandomCitationOnJump) PlayerController.OnJump -= DisplayRandomCitation;
         }
 
         public void DisplayRandomCitation() => DisplayRandomCitation(_inDisplayDuration, _outDisplayDuration);
         private void DisplayRandomCitation( float inDuration, float outDuration)
         {
+            Hide(0);
+            
             _citationSequence?.Kill(false);
-
             _citationSequence = DOTween.Sequence();
             
-            Hide(0);
-
             CitationData citationData = CitationBank.GetRandomCitation();
             _author.text = citationData.Author;
             _citation.text = citationData.Citation;
-
-
+            
             _citationSequence.Append(_canvasGroup.DOFade(1, inDuration));
             _citationSequence.AppendInterval(2.5f);
             _citationSequence.AppendCallback(() => Hide(outDuration));
