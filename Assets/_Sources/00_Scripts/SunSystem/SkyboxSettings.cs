@@ -5,6 +5,8 @@ namespace ExydeToolbox
     [CreateAssetMenu(menuName = "Settings/Skybox Settings", fileName = "New Skybox Settings")]
     public class SkyboxSettings : ScriptableObject
     {
+        [SerializeField] private SunState _sunState;
+        
         [Header ("Sky")]
         [SerializeField] public Color _skyColor;
         [SerializeField] public Color _horizonColor;
