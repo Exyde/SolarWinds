@@ -12,3 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b6731e7b3ec42a8815c94a6d46376f0, type: 3}
   m_Name: NightSkybox
   m_EditorClassIdentifier: 
+  _sunState: 1
+  _skyboxMaterial: {fileID: 2100000, guid: 63d5e90076a99604d8103461d796c206, type: 2}
+  _skyColor: {r: 0, g: 0, b: 0, a: 0}
+  _horizonColor: {r: 0, g: 0, b: 0, a: 0}
+  _starsDensity: 0
+  _cloudTexture: {fileID: 0}
+  _cloudColor: {r: 0, g: 0, b: 0, a: 0}
+  _cloudSpeed: 0
+  _cloudHeight: 0
+  _cloudEdge: 0
+  _sunColor: {r: 0, g: 0, b: 0, a: 0}
+  _sunSize: 0
+  _sunMaskSize: 0

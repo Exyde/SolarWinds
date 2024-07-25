@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using UnityEngine;
 
 public enum SunState { Sunborn, Sunset, Sunrise, Sunburn, Sundeath, Eclipse}
@@ -9,6 +10,8 @@ public class SunStateManager : MonoBehaviour
     [SerializeField] SkyboxController _skyboxController = new SkyboxController();
 
     public static Action<SunState> OnSunStateChanged;
+
+    public float swapTimeBetweenStates = 4f;
 
     public SunState SunState
     { 
@@ -22,13 +25,22 @@ public class SunStateManager : MonoBehaviour
 
     private void Start()
     {
-        SunState = SunState.Sunborn;
+        Sequence swapSequence = DOTween.Sequence();
+
+        swapSequence.InsertCallback(0, () => SetSunState(SunState.Sunborn));
+        swapSequence.AppendInterval(swapTimeBetweenStates);
+        swapSequence.AppendCallback( () => SetSunState(SunState.Sunset));
+        swapSequence.AppendInterval(swapTimeBetweenStates);
+        
+        swapSequence.SetLoops(-1);
+        swapSequence.Play();
+
     }
 
-    public void SetSunState(SunState sunState)
+    public void SetSunState(SunState newSunState)
     {
-        _skyboxController.SetSunState(sunState);
-        SunState = sunState;
+        _skyboxController.SetSunState(_sunState, newSunState, 5f);
+        SunState = newSunState;
     }
 
     private void OnEnable()
@@ -48,20 +60,13 @@ public class SunStateManager : MonoBehaviour
     
     [ContextMenu("Lerp Skybox A->B")]
     public void LerpSkyboxSettingsContextMenuAB(){
-        StartCoroutine(_skyboxController.LerpSkyboxSettings(_skyboxController._skyboxSettingsA, _skyboxController._skyboxSettingsB,  _skyboxController._timeToLerp));
     }
 
     [ContextMenu("Lerp Skybox B->A")]
     public void LerpSkyboxSettingsContextMenuBA(){
-        StartCoroutine(_skyboxController.LerpSkyboxSettings(_skyboxController._skyboxSettingsB, _skyboxController._skyboxSettingsA, _skyboxController._timeToLerp));
     }
 
     [ContextMenu("Set Skybox Settings : A")]
     public void SetSkyboxSettings(){
-        StartCoroutine(_skyboxController.LerpSkyboxSettings(_skyboxController._skyboxSettingsA, _skyboxController._skyboxSettingsA, 0.1f));
-    }
-
-    private void LerpSkyboxAllNight(){
-        StartCoroutine(_skyboxController.LerpSkyboxSettings(_skyboxController._skyboxSettingsA, _skyboxController._skyboxSettingsA, 60f));
     }
 }

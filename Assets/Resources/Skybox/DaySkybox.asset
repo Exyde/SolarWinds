@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b6731e7b3ec42a8815c94a6d46376f0, type: 3}
   m_Name: DaySkybox
   m_EditorClassIdentifier: 
-  _sunState: 1
+  _sunState: 0
   _skyboxMaterial: {fileID: 2100000, guid: 3b041147d6edaaf4caa736dbd03f6399, type: 2}
   _skyColor: {r: 1, g: 1, b: 1, a: 0}
   _horizonColor: {r: 1, g: 1, b: 1, a: 0}

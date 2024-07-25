@@ -15,11 +15,7 @@ public class SkyboxController
         public SunState _sunState;
         public SkyboxSettings _skyboxSettings;
     }
-
-    [SerializeField] [Range(.5f, 30)] public float _timeToLerp;
-    [SerializeField] public SkyboxSettings _skyboxSettingsA;
-    [SerializeField] public SkyboxSettings _skyboxSettingsB;
-
+    
     [SerializeField] public List<SunStateSettingsPair> _sunStateSettings;
 
     private static readonly int CloudTexture = Shader.PropertyToID("_Cloud_Texture");
@@ -34,7 +30,6 @@ public class SkyboxController
     private static readonly int SunSize = Shader.PropertyToID("_SunSize");
     private static readonly int SunMaskSize = Shader.PropertyToID("_Sun_Mask_Size");
 
-    //Todo : Dict <Sunstate,SkyboxSettings>
 
     //Todo : doTween version ? -- Lerp Directly from Material in Settings instead of members 
     public IEnumerator LerpSkyboxSettings(SkyboxSettings A, SkyboxSettings B, float timeToLerp)
@@ -75,9 +70,16 @@ public class SkyboxController
         }
     }
 
-    public void SetSunState(SunState sunState)
+    public void SetSunState(SunState currentSunState, SunState newSunState, float transitionDuration)
     {
-        SunStateSettingsPair settings = _sunStateSettings.FirstOrDefault(x => x._sunState == sunState);
-        RenderSettings.skybox.Lerp(settings._skyboxSettings.Material, settings._skyboxSettings.Material, 1);
+        SunStateSettingsPair currentSettings = _sunStateSettings.First(x => x._sunState == currentSunState);
+        SunStateSettingsPair newSettings = _sunStateSettings.First(x => x._sunState == newSunState);
+        
+        Debug.Log($"CurrentSettings : {currentSettings._skyboxSettings} - newSettings : {newSettings._skyboxSettings}");
+
+       
+        //-- This seems shitty.
+//        RenderSettings.skybox.Lerp(currentSettings._skyboxSettings.Material, newSettings._skyboxSettings.Material, transitionDuration);
+        RenderSettings.skybox = newSettings._skyboxSettings.Material;
     }
 }
