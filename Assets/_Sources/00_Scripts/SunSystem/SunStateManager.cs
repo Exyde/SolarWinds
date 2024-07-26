@@ -12,6 +12,7 @@ public class SunStateManager : MonoBehaviour
     public static Action<SunState> OnSunStateChanged;
 
     public float swapTimeBetweenStates = 4f;
+    public float transitionDuration = 10F;
 
     public SunState SunState
     { 
@@ -28,7 +29,7 @@ public class SunStateManager : MonoBehaviour
         Sequence swapSequence = DOTween.Sequence();
 
         swapSequence.InsertCallback(0, () => SetSunState(SunState.Sunborn));
-        swapSequence.AppendInterval(swapTimeBetweenStates);
+        swapSequence.AppendInterval(swapTimeBetweenStates + transitionDuration / 4f);
         swapSequence.AppendCallback( () => SetSunState(SunState.Sunset));
         swapSequence.AppendInterval(swapTimeBetweenStates);
         
@@ -39,7 +40,7 @@ public class SunStateManager : MonoBehaviour
 
     public void SetSunState(SunState newSunState)
     {
-        _skyboxController.SetSunState(_sunState, newSunState, 5f);
+        _skyboxController.SetSunState(_sunState, newSunState, transitionDuration);
         SunState = newSunState;
     }
 

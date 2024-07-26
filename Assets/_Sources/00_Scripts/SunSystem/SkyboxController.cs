@@ -2,7 +2,10 @@
 using System.Linq;
 using DG.Tweening;
 using ExydeToolbox;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
+using Sequence = DG.Tweening.Sequence;
 
 [System.Serializable]
 public class SkyboxController
@@ -24,7 +27,13 @@ public class SkyboxController
     private static readonly int SunMaskSize = Shader.PropertyToID("_Sun_Mask_Size");
 #endregion
 
+
+void Start()
+{
+    RenderSettings.ambientMode = AmbientMode.Skybox;
     
+}
+
     public void LerpSkyboxSettings(SkyboxSettings to, float duration = 0)
     {
         transitionSequence?.Kill();
@@ -60,9 +69,9 @@ public class SkyboxController
         LerpShaderColor(transitionSequence, skybox, HorizonColor, b.Material.GetColor(HorizonColor), duration);
         
         //Stars
-        LerpShaderFloat(transitionSequence, skybox, StarDensity, b.Material.GetFloat(StarDensity), duration);
-        //Cloud
+        LerpShaderFloat(transitionSequence, skybox, StarDensity, b.Material.GetFloat(StarDensity), 0.2f);
         
+        //Cloud
         LerpShaderColor(transitionSequence, skybox, CloudColor, b.Material.GetColor(CloudColor), duration);
         LerpShaderFloat(transitionSequence, skybox, CloudSpeed, b.Material.GetFloat(CloudSpeed), duration);
         LerpShaderFloat(transitionSequence, skybox, CloudHeight, b.Material.GetFloat(CloudHeight), duration);
@@ -72,7 +81,10 @@ public class SkyboxController
         LerpShaderColor(transitionSequence, skybox, SunColor, b.Material.GetColor(SunColor), duration);
         LerpShaderFloat(transitionSequence, skybox, SunSize, b.Material.GetFloat(SunSize), duration);
         LerpShaderFloat(transitionSequence, skybox, SunMaskSize, b.Material.GetFloat(SunMaskSize), duration);
-
+        
+        transitionSequence.Insert(0, DOTween.To (() => RenderSettings.ambientLight, x => RenderSettings.ambientLight = x, b.Material.GetColor(SkyColor),
+            duration));
+        
 //        transitionSequence.AppendCallback(() => RenderSettings.skybox = skybox);
         transitionSequence.Play();
     }

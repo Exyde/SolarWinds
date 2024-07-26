@@ -87,9 +87,9 @@ Material:
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _Cloud_Edge: 0.657
-    - _Cloud_Height: 0.075
-    - _Cloud_Speed: 0.116
+    - _Cloud_Edge: 0.80366886
+    - _Cloud_Height: 0.15033811
+    - _Cloud_Speed: 0.11920588
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
@@ -110,21 +110,21 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Star_Density: 1200
-    - _SunSize: 0.47
-    - _Sun_Mask_Size: 0.453
+    - _Star_Density: 0
+    - _SunSize: 0.5461396
+    - _Sun_Mask_Size: 0.08993438
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Cloud_Color: {r: 0, g: 0, b: 0, a: 1}
+    - _Cloud_Color: {r: 0.8014694, g: 0.8014694, b: 0.8014694, a: 0.19853063}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HorizonColor: {r: 1, g: 1, b: 1, a: 0}
-    - _SkyColor: {r: 1, g: 1, b: 1, a: 0}
+    - _HorizonColor: {r: 0.14665323, g: 0.47748393, b: 0.5251798, a: 0}
+    - _SkyColor: {r: 0.37683663, g: 0.7660155, b: 0.70268035, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _Sun_Color: {r: 9.416635, g: 3.0197868, b: 1.0216162, a: 1}
+    - _Sun_Color: {r: 2.67096, g: 1.4009895, b: 1.0042915, a: 0.19853063}
   m_BuildTextureStacks: []
 --- !u!114 &1533814742245067736
 MonoBehaviour:
