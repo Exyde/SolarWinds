@@ -11,6 +11,7 @@ namespace ExydeToolbox
         public SunState SunState => _sunState;
         public Material Material => _skyboxMaterial;
         
+        /*
         [Header ("Sky")]
         [SerializeField] public Color _skyColor;
         [SerializeField] public Color _horizonColor;
@@ -30,6 +31,6 @@ namespace ExydeToolbox
         [SerializeField] public Color _sunColor;
         [SerializeField][Range(0, 2)] public float _sunSize;
         [SerializeField][Range(0, 1)] public float _sunMaskSize;
-
+*/
     }
 }

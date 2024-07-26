@@ -1,23 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using ExydeToolbox;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [System.Serializable]
 public class SkyboxController
 {
-
-    [System.Serializable]
-    public struct SunStateSettingsPair
-    {
-        public SunState _sunState;
-        public SkyboxSettings _skyboxSettings;
-    }
+    private Sequence transitionSequence;
     
-    [SerializeField] public List<SunStateSettingsPair> _sunStateSettings;
-
+    [SerializeField] public List<SkyboxSettings> _sunStateSettings;
+#region Shader Properties
     private static readonly int CloudTexture = Shader.PropertyToID("_Cloud_Texture");
     private static readonly int SkyColor = Shader.PropertyToID("_SkyColor");
     private static readonly int HorizonColor = Shader.PropertyToID("_HorizonColor");
@@ -29,57 +22,71 @@ public class SkyboxController
     private static readonly int SunColor = Shader.PropertyToID("_Sun_Color");
     private static readonly int SunSize = Shader.PropertyToID("_SunSize");
     private static readonly int SunMaskSize = Shader.PropertyToID("_Sun_Mask_Size");
+#endregion
 
-
-    //Todo : doTween version ? -- Lerp Directly from Material in Settings instead of members 
-    public IEnumerator LerpSkyboxSettings(SkyboxSettings A, SkyboxSettings B, float timeToLerp)
+    
+    public void LerpSkyboxSettings(SkyboxSettings to, float duration = 0)
     {
+        transitionSequence?.Kill();
 
-        float elapsedTime = 0;
-
+        transitionSequence = DOTween.Sequence();
+        
         Material skybox = RenderSettings.skybox;
-        skybox.SetTexture(CloudTexture, B._cloudTexture);
-
-        while (elapsedTime < timeToLerp)
-        {
-
-            float t = elapsedTime / timeToLerp;
-            //skybox.Lerp(matA, matB, t);
-
-            //Sky
-            skybox.SetColor(SkyColor, Color.Lerp(A._skyColor, B._skyColor, t));
-            skybox.SetColor(HorizonColor, Color.Lerp(A._horizonColor, B._horizonColor, t));
-
-            //Stars
-            skybox.SetFloat(StarDensity, Mathf.Lerp(A._starsDensity, B._starsDensity, t));
-
-            //Cloud
-            skybox.SetColor(CloudColor, Color.Lerp(A._cloudColor, B._cloudColor, t));
-            skybox.SetFloat(CloudSpeed, Mathf.Lerp(A._cloudSpeed, B._cloudSpeed, t));
-            skybox.SetFloat(CloudHeight, Mathf.Lerp(A._cloudHeight, B._cloudHeight, t));
-            skybox.SetFloat(CloudEdge, Mathf.Lerp(A._cloudEdge, B._cloudEdge, t));
-
-            //Astral
-            skybox.SetColor(SunColor, Color.Lerp(A._sunColor, B._sunColor, t));
-            skybox.SetFloat(SunSize, Mathf.Lerp(A._sunSize, B._sunSize, t));
-            skybox.SetFloat(SunMaskSize, Mathf.Lerp(A._sunMaskSize, B._sunMaskSize, t));
-
-            elapsedTime += Time.deltaTime;
-            //RenderSettings.skybox = skybox;
-            yield return null;
-        }
+            // skybox.SetTexture(CloudTexture, to._cloudTexture);
     }
 
+    public void LerpShaderColor(Sequence sequence, Material material, int propertyID, Color color, float duration = 0)
+    {
+        sequence.Insert(0, DOTween.To (() => material.GetColor(propertyID), x => material.SetColor(propertyID, x), color,
+            duration));
+    }
+    
+    public void LerpShaderFloat(Sequence sequence, Material material, int propertyID, float value, float duration = 0)
+    {
+        sequence.Insert(0, DOTween.To (() => material.GetFloat(propertyID), x => material.SetFloat(propertyID, x), value,
+            duration));
+    }
+    
+    public void LerpSkyboxSettings(SkyboxSettings a, SkyboxSettings b, float duration)
+    {
+        transitionSequence?.Kill();
+        transitionSequence = DOTween.Sequence();
+        
+        Material skybox = RenderSettings.skybox;
+        //skybox.SetTexture(CloudTexture, b.Material.GetTexture("CloudTexture"));
+        
+        //Sky
+        LerpShaderColor(transitionSequence, skybox, SkyColor, b.Material.GetColor(SkyColor), duration);
+        LerpShaderColor(transitionSequence, skybox, HorizonColor, b.Material.GetColor(HorizonColor), duration);
+        
+        //Stars
+        LerpShaderFloat(transitionSequence, skybox, StarDensity, b.Material.GetFloat(StarDensity), duration);
+        //Cloud
+        
+        LerpShaderColor(transitionSequence, skybox, CloudColor, b.Material.GetColor(CloudColor), duration);
+        LerpShaderFloat(transitionSequence, skybox, CloudSpeed, b.Material.GetFloat(CloudSpeed), duration);
+        LerpShaderFloat(transitionSequence, skybox, CloudHeight, b.Material.GetFloat(CloudHeight), duration);
+        LerpShaderFloat(transitionSequence, skybox, CloudEdge, b.Material.GetFloat(CloudEdge), duration);
+
+        //Astral
+        LerpShaderColor(transitionSequence, skybox, SunColor, b.Material.GetColor(SunColor), duration);
+        LerpShaderFloat(transitionSequence, skybox, SunSize, b.Material.GetFloat(SunSize), duration);
+        LerpShaderFloat(transitionSequence, skybox, SunMaskSize, b.Material.GetFloat(SunMaskSize), duration);
+
+//        transitionSequence.AppendCallback(() => RenderSettings.skybox = skybox);
+        transitionSequence.Play();
+    }
+    
     public void SetSunState(SunState currentSunState, SunState newSunState, float transitionDuration)
     {
-        SunStateSettingsPair currentSettings = _sunStateSettings.First(x => x._sunState == currentSunState);
-        SunStateSettingsPair newSettings = _sunStateSettings.First(x => x._sunState == newSunState);
+        SkyboxSettings currentSettings = _sunStateSettings.First(x => x.SunState == currentSunState);
+        SkyboxSettings newSettings = _sunStateSettings.First(x => x.SunState == newSunState);
         
-        Debug.Log($"CurrentSettings : {currentSettings._skyboxSettings} - newSettings : {newSettings._skyboxSettings}");
+        Debug.Log($"CurrentSettings : {currentSettings} - newSettings : {newSettings}");
 
-       
+       LerpSkyboxSettings(currentSettings, newSettings, transitionDuration);
         //-- This seems shitty.
 //        RenderSettings.skybox.Lerp(currentSettings._skyboxSettings.Material, newSettings._skyboxSettings.Material, transitionDuration);
-        RenderSettings.skybox = newSettings._skyboxSettings.Material;
+        //RenderSettings.skybox = newSettings.Material;
     }
 }
