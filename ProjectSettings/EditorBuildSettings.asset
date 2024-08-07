@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Sources/00_Scenes/SCN_FragmentZero.unity
     guid: 86d72849e384af14aba4b51767e2da53
+  - enabled: 1
+    path: Assets/_Sources/00_Scenes/SCN_FragmentFish.unity
+    guid: c51752096ccdc764aad41ee044d8fbac
   m_configObjects: {}

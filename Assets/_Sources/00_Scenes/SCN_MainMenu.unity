@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.94352496, g: 0.30167353, b: 0.22144279, a: 1}
+  m_IndirectSpecularColor: {r: 0.9334185, g: 0.30207747, b: 0.22100246, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1752,7 +1752,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f94b873147a2425d805f0bc84923be8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fragmentData: {fileID: 11400000, guid: dbb8729dccbc4374f92b9f5c1d88d40b, type: 2}
+  _fragmentData: {fileID: 11400000, guid: 38b344ecdc331e84cbc401205dd0ef89, type: 2}
   _fragmentMainTextTMP: {fileID: 139613775}
   _fragmentDescriptionTMP: {fileID: 2102482142}
   _fragmentButton: {fileID: 756672677}
@@ -1854,7 +1854,7 @@ MonoBehaviour:
   Tags:
     Tags: []
   lastModifiedBy: Ludogram
-  lastModifiedDate: 20/07/2024 18:40:58
+  lastModifiedDate: 06/08/2024 16:53:12
   IsEditorPreview: 0
   isHeader: 0
   overrideHierarchyStyle: 0
