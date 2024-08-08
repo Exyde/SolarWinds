@@ -28,7 +28,7 @@ public class SunStateManager : MonoBehaviour
     {
         Sequence swapSequence = DOTween.Sequence();
 
-        swapSequence.InsertCallback(0, () => SetSunState(SunState.Sunborn));
+        swapSequence.InsertCallback(0, () => SetSunState(SunState.Sundeath));
         swapSequence.AppendInterval(swapTimeBetweenStates + transitionDuration / 4f);
         swapSequence.AppendCallback( () => SetSunState(SunState.Sunset));
         swapSequence.AppendInterval(swapTimeBetweenStates);

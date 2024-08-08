@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_Skybox.Runtime
+  m_Name: M_Skybox.Sundeath
   m_Shader: {fileID: -6465566751694194690, guid: 56c0c4620cd091c45b898c400c6a690c, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -29,7 +29,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Cloud_Texture:
-        m_Texture: {fileID: 2800000, guid: 26b59fecde98bc24aa5ba9dd831dd77b, type: 3}
+        m_Texture: {fileID: 2800000, guid: bc9eb91ded766f546a3bb04b4bc52e79, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -87,9 +87,9 @@ Material:
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _Cloud_Edge: 0.74001676
-    - _Cloud_Height: 0.117642485
-    - _Cloud_Speed: 0.11781457
+    - _Cloud_Edge: 0.443
+    - _Cloud_Height: 1
+    - _Cloud_Speed: 1
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
@@ -111,20 +111,20 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Star_Density: 0
-    - _SunSize: 0.51309615
-    - _Sun_Mask_Size: 0.24749951
+    - _SunSize: 0
+    - _Sun_Mask_Size: 0
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Cloud_Color: {r: 0.45364347, g: 0.45364347, b: 0.45364347, a: 0.54635656}
+    - _Cloud_Color: {r: 0, g: 0, b: 0, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HorizonColor: {r: 0.15527537, g: 0.29911545, b: 0.3709551, a: 0}
-    - _SkyColor: {r: 0.48351228, g: 0.45524442, b: 0.5081632, a: 0}
+    - _HorizonColor: {r: 0, g: 0, b: 0, a: 0}
+    - _SkyColor: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _Sun_Color: {r: 5.598483, g: 2.1035237, b: 1.0118102, a: 0.54635656}
+    - _Sun_Color: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &1533814742245067736
 MonoBehaviour:
