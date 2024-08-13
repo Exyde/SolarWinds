@@ -1,11 +1,12 @@
 using System;
 using System.Numerics;
 using Engine;
+using ExydeToolbox;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
 
-public class MimicController : MonoBehaviour
+public class MimicController : MonoBehaviour, ISunStateListener
 {
     [SerializeField] private Observer<float> _speed = new Observer<float>(2);
     [SerializeField] Transform _body;
@@ -90,5 +91,30 @@ public class MimicController : MonoBehaviour
         var direction = (_targetPos - transform.position).normalized;            
 
         _body.position += direction * (Time.deltaTime * _speed.Value);
+    }
+
+
+    private void OnEnable()
+    {
+        SunStateManager.OnSunStateChanged += OnSunStateChanged;
+    }
+
+    private void OnDisable()
+    {
+        SunStateManager.OnSunStateChanged -= OnSunStateChanged;
+    }
+
+    public void OnSunStateChanged(SunState sunState)
+    {
+        if (sunState == SunState.Sundeath)
+        {
+            _minDistanceToPlayer = 1;
+            forceFollowPlayer = true;
+        }
+        else
+        {
+            _minDistanceToPlayer = 10;
+            forceFollowPlayer = false; 
+        }
     }
 }

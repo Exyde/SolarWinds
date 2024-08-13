@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b6731e7b3ec42a8815c94a6d46376f0, type: 3}
   m_Name: SS_SunDeath
   m_EditorClassIdentifier: 
-  _sunState: 0
+  _sunState: 4
   _skyboxMaterial: {fileID: 2100000, guid: 4d049e6aa1f88b64ca696d03a418258a, type: 2}

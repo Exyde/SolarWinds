@@ -31,7 +31,6 @@ public class SkyboxController
 void Start()
 {
     RenderSettings.ambientMode = AmbientMode.Skybox;
-    
 }
 
     public void LerpSkyboxSettings(SkyboxSettings to, float duration = 0)
