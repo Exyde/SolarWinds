@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Engine.CitationPlugin.GenericMessagePlugin;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class FishFaller : MonoBehaviour
 {
@@ -19,6 +22,15 @@ public class FishFaller : MonoBehaviour
 
     [SerializeField] private int _fishInstances = 0;
     private static readonly int ColorProperty = Shader.PropertyToID("_BaseColor");
+
+    public GenericMessageDisplayer _messageDisplayer;
+
+    private float timer = 0;
+
+    private void Update()
+    {
+        timer += Time.deltaTime;
+    }
 
     void Start()
     {
@@ -37,7 +49,15 @@ public class FishFaller : MonoBehaviour
             if (_fishInstances == maxFishes)
             {
                 ChangeAllFishesMaterial();
-
+                _messageDisplayer.ShowMessage(new GenericMessageDisplayer.Message
+                {
+                    Content = "Many fishes died...",
+                    SubContent = $"{timer} since you entered this room...",
+                    InDuration = 1,
+                    DisplayDuration = 8,
+                    OutDuration = 1,
+                    AutoSkip = false
+                });
                 _sequence.SetLoops(0);
                 _sequence.Kill();
             }

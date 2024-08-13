@@ -1,6 +1,7 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public enum SunState { Sunborn, Sunset, Sunrise, Sunburn, Sundeath, Eclipse}
 
@@ -11,7 +12,7 @@ public class SunStateManager : MonoBehaviour
 
     public static Action<SunState> OnSunStateChanged;
 
-    public float swapTimeBetweenStates = 4f;
+    [FormerlySerializedAs("swapTimeBetweenStates")] public float durationBetweenState = 4f;
     public float transitionDuration = 10F;
 
     public SunState SunState
@@ -29,11 +30,11 @@ public class SunStateManager : MonoBehaviour
         Sequence swapSequence = DOTween.Sequence();
         
         swapSequence.InsertCallback(0, () => SetSunState(SunState.Sundeath));
-        swapSequence.AppendInterval(swapTimeBetweenStates);
-        swapSequence.InsertCallback( swapTimeBetweenStates, () => SetSunState(SunState.Sunset));
-        swapSequence.AppendInterval(swapTimeBetweenStates);
-        swapSequence.InsertCallback( swapTimeBetweenStates * 2, () => SetSunState(SunState.Sunborn));
-        swapSequence.AppendInterval(swapTimeBetweenStates);
+        swapSequence.AppendInterval(durationBetweenState);
+        swapSequence.AppendCallback(() => SetSunState(SunState.Sunset));
+        swapSequence.AppendInterval(durationBetweenState);
+        swapSequence.AppendCallback(() => SetSunState(SunState.Sunborn));
+        swapSequence.AppendInterval(durationBetweenState);
         
         swapSequence.SetLoops(-1);
         swapSequence.Play();
